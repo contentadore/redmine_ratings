@@ -1,0 +1,38 @@
+<% @issues = Issue.all %>
+<% @authors = User.all %>
+<% @roles = Role.all %>
+<% @rates = Rate.all %>
+
+<fieldset class="box tabular">
+  <div class="massCreateRatingForm">
+    <p>
+      <label for="rating_rate_id">rate_id</label>
+      <%= select_tag "rating_rate_id", (options_from_collection_for_select(@rates, "id", "value")), {:class => 'rateId'} %>
+    </p>
+
+    <p>
+      <label for="rating_issue_id">issue_id</label>
+      <%= select_tag "issue", (options_from_collection_for_select(@issues, "id", "subject")), {:class => 'issueId'} %>
+    </p>
+
+    <p>
+      <label for="rating_type_id">type_id</label>
+      <input class="typeId" type="text" name="rating[type_id]" id="rating_type_id" value='<%= @rating.type_id %>'>
+    </p>
+
+    <p>
+      <label for="rating_value">value</label>
+      <input class="ratingValue" type="number" name="rating[value]" id="rating_value" value='<%= @rating.value %>'>
+    </p>
+
+    <p>
+      <label for="rating_author_role_id">author_role_id</label>
+      <%= select_tag "rating_author_role_id", (options_from_collection_for_select(@roles, "id", "name")), {:class => 'authorRoleId'} %>
+    </p>
+
+    <p>
+      <label for="rating_author_id">author_id</label>
+      <%= select_tag "author_id", (options_from_collection_for_select(@authors, "id", "login")), {:class => 'authorId'} %>
+    </p>
+  </div>
+</fieldset>

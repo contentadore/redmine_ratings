@@ -1,0 +1,274 @@
+<% @rate = Rate.new %>
+<% @rating = Rating.new %>
+<% @trackers = Tracker.all %>
+<% @currencies = Currency.all %>
+<% @languages = Language.all %>
+
+<% user = User.find(params[:id]) %>
+<% user_rate = Rate.where(user_id: user.id) %>
+
+      <div id="duplicaterRate11" style="display: none;">
+              <fieldset class="box tabular">
+                  <div class="massCreateRateForm">
+                    <p>
+                      <label for="rate_tracker_id">Tracker Id</label>
+                      <%= select_tag "tracker", (options_from_collection_for_select(@trackers, "id", "name")), {:class => 'trackerId'} %>
+                    </p>
+
+                    <p>
+                      <label for="rate_language_id">Language Id</label>
+                      <%= select_tag "language_id", (options_from_collection_for_select(@languages, "id", "value")), {:class => 'languageId'} %>
+                    </p>
+
+                    <p>
+                      <label for="rate_value">value</label>
+                      <input class="value" type="number" name="rate[value]" id="rate_value" value='<%= @rate.value %>'>
+                    </p>
+
+                    <p>
+                      <label for="rate_currency_id">Currency Id</label>
+                      <%= select_tag "currency_id", (options_from_collection_for_select(@currencies, "id", "value")), {:class => 'currencyId'} %>
+                    </p>
+
+                    <p>
+                      <label for="rate_unit_qty">unit_qty</label>
+                      <input class="unitQty" type="number" name="rate[unit_qty]" id="rate_unit_qty" value='<%= @rate.unit_qty %>'>
+                    </p>
+
+                    <p>
+                      <label for="rate_unit_type_id">Unit Type Id</label>
+                      <input class="unitTypeId" type="number" name="rate[unit_type_id]" id="rate_unit_type_id" value='<%= @rate.unit_type_id %>'>
+                    </p>
+                  </div>
+
+                  <div class="divvv">
+                  </div>
+
+                </fieldset>
+              </div>
+
+<% if user_rate.any? %>
+  <% user_rate.each do |rate| %>
+    <div id="duplicaterRate">
+      <div class="splitcontent">
+          <div class="splitcontentleft">
+            <fieldset class="box tabular">
+                <div class="massCreateRateForm">
+                  <p style="display: none;">
+                    <input class="id" type="number" name="rate[id]" id="rate_id" value='<%= rate.id %>'>
+                  </p>
+
+                  <p>
+                    <label for="rate_tracker_id">Tracker Id</label>
+                    <%= select_tag "tracker", (options_from_collection_for_select(@trackers, "id", "name")), {:class => 'trackerId'} %>
+                  </p>
+
+                  <p>
+                    <label for="rate_language_id">Language Id</label>
+                    <%= select_tag "language_id", (options_from_collection_for_select(@languages, "id", "value")), {:class => 'languageId'} %>
+                  </p>
+
+                  <p>
+                    <label for="rate_value">value</label>
+                    <input class="value" type="number" name="rate[value]" id="rate_value" value='<%= rate.value %>'>
+                  </p>
+
+                  <p>
+                    <label for="rate_currency_id">Currency Id</label>
+                    <%= select_tag "currency_id", (options_from_collection_for_select(@currencies, "id", "value")), {:class => 'currencyId'} %>
+                  </p>
+
+                  <p>
+                    <label for="rate_unit_qty">unit_qty</label>
+                    <input class="unitQty" type="number" name="rate[unit_qty]" id="rate_unit_qty" value='<%= rate.unit_qty %>'>
+                  </p>
+
+                  <p>
+                    <label for="rate_unit_type_id">Unit Type Id</label>
+                    <input class="unitTypeId" type="number" name="rate[unit_type_id]" id="rate_unit_type_id" value='<%= rate.unit_type_id %>'>
+                  </p>
+                </div>
+              </fieldset>
+
+
+            </div>
+
+
+
+
+
+      </div>
+      <div class="divvv">
+      </div>
+    </div>
+
+  <% end %>
+
+  <p>
+    <%= link_to "Update", home_path, :remote => true,
+        :id => "massUpdateRateId", :onlick => "massUpdateRate()" %>
+  </p>
+
+  <p>
+    <%= link_to "Add Rate", home_path, :remote => true,
+        :class => "icon icon-add", :id => "rateButton", :onlick => "duplicateRate()" %>
+  </p>
+
+
+
+<% else %>
+  <div class="divvv">
+  </div>
+
+  <div id="duplicaterRate" style="display: none;">
+    <div class="splitcontent">
+        <div class="splitcontentleft">
+          <fieldset class="box tabular">
+              <div class="massCreateRateForm">
+                <p>
+                  <label for="rate_tracker_id">Tracker Id</label>
+                  <%= select_tag "tracker", (options_from_collection_for_select(@trackers, "id", "name")), {:class => 'trackerId'} %>
+                </p>
+
+                <p>
+                  <label for="rate_language_id">Language Id</label>
+                  <%= select_tag "language_id", (options_from_collection_for_select(@languages, "id", "value")), {:class => 'languageId'} %>
+                </p>
+
+                <p>
+                  <label for="rate_value">value</label>
+                  <input class="value" type="number" name="rate[value]" id="rate_value" value='<%= @rate.value %>'>
+                </p>
+
+                <p>
+                  <label for="rate_currency_id">Currency Id</label>
+                  <%= select_tag "currency_id", (options_from_collection_for_select(@currencies, "id", "value")), {:class => 'currencyId'} %>
+                </p>
+
+                <p>
+                  <label for="rate_unit_qty">unit_qty</label>
+                  <input class="unitQty" type="number" name="rate[unit_qty]" id="rate_unit_qty" value='<%= @rate.unit_qty %>'>
+                </p>
+
+                <p>
+                  <label for="rate_unit_type_id">Unit Type Id</label>
+                  <input class="unitTypeId" type="number" name="rate[unit_type_id]" id="rate_unit_type_id" value='<%= @rate.unit_type_id %>'>
+                </p>
+              </div>
+            </fieldset>
+          </div>
+
+          <div id="divvv">
+          </div>
+    </div>
+  </div>
+
+
+  <p>
+    <%= link_to "Create", home_path, :remote => true,
+        :id => "massCreateRateId", :onlick => "massCreateRate()" %>
+  </p>
+
+  <p>
+    <%= link_to "Add Rate", home_path, :remote => true,
+        :class => "icon icon-add", :id => "rateButton", :onlick => "duplicateRate()" %>
+  </p>
+<% end %>
+
+
+<%= javascript_tag do %>
+
+var original = document.getElementById('duplicater');
+
+document.getElementById('rateButton').onclick = duplicateRate;
+
+<% if user_rate.any? %>
+  document.getElementById('massUpdateRateId').onclick = massUpdateRate;
+<% else %>
+  document.getElementById('massCreateRateId').onclick = massCreateRate;
+<% end %>
+
+
+
+var i = 0;
+var rateOriginal = document.getElementById('duplicaterRate11');
+
+function duplicateRate() {
+    var rateClone = rateOriginal.cloneNode(true);
+    rateClone.style.display = "block";
+    i = ++i
+    rateClone.id = "rateDuplicetor" + i;
+
+    $(rateClone).insertAfter($(".divvv").last());
+}
+
+function massCreateRate() {
+  var params = {};
+  var massCreateRateFormCount = $( ".massCreateRateForm" ).length;
+
+  params['rate'] = {};
+
+  for (let i = 0; i < massCreateRateFormCount; i++) {
+
+    if ($(".unitQty").eq(i).val() !== '' && $(".value").eq(i).val() !== '') {
+      params['rate'][i] = {};
+      params['rate'][i]['user_id'] = <%= user.id %>;
+      params['rate'][i]['tracker_id'] = $(".trackerId").eq(i).val();
+      params['rate'][i]['language_id'] = $(".languageId").eq(i).val();
+      params['rate'][i]['value'] = $(".value").eq(i).val();
+      params['rate'][i]['currency_id'] = $(".currencyId").eq(i).val();
+      params['rate'][i]['unit_qty'] = $(".unitQty").eq(i).val();
+      params['rate'][i]['unit_type_id'] = $(".unitTypeId").eq(i).val();
+    }
+  }
+
+  $.ajax({
+    type: "POST",
+    url: "/rate_ratings/mass_create",
+    data: { params }
+  })
+}
+
+function massUpdateRate() {
+  var params = {};
+  var massCreateRateFormCount = $( ".massCreateRateForm" ).length;
+  var userRateCount = <%= user_rate.count %>
+
+  params['rate'] = {};
+
+
+  for (let i = 0; i < massCreateRateFormCount; i++) {
+    if ($(".unitQty").eq(i).val() !== '' && $(".value").eq(i).val() !== '') {
+      params['rate'][i] = {};
+
+      n = i-1;
+
+      alert(i)
+      alert(userRateCount)
+      alert(i > userRateCount)
+      alert($(".id").eq(n).val())
+
+      if (i > userRateCount) {
+        params['rate'][i]['id'] = 'nil';
+      } else {
+        params['rate'][i]['id'] = $(".id").eq(n).val();
+      }
+
+      params['rate'][i]['user_id'] = <%= user.id %>;
+      params['rate'][i]['tracker_id'] = $(".trackerId").eq(i).val();
+      params['rate'][i]['language_id'] = $(".languageId").eq(i).val();
+      params['rate'][i]['value'] = $(".value").eq(i).val();
+      params['rate'][i]['currency_id'] = $(".currencyId").eq(i).val();
+      params['rate'][i]['unit_qty'] = $(".unitQty").eq(i).val();
+      params['rate'][i]['unit_type_id'] = $(".unitTypeId").eq(i).val();
+    }
+  }
+
+  $.ajax({
+    type: "PUT",
+    url: "/rate_ratings/mass_update",
+    data: { params }
+  })
+}
+
+<% end %>

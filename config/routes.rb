@@ -1,0 +1,10 @@
+resources :rate_ratings do
+  post 'mass_create', on: :collection
+  put 'mass_update', on: :collection
+end
+
+resources :languages do
+end
+
+resources :currencies do
+end

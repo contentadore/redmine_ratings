@@ -1,0 +1,8 @@
+<% def rate_settings_tabs %>
+  <% tabs = [{:name => 'currencies', :partial => 'rate_ratings/currencies', :label => :label_currencies}, {:name => 'languages', :partial => 'rate_ratings/languages', :label => :label_languages}] %>
+<% end %>
+
+<% @currencies = Currency.all %>
+<% @languages = Language.all %>
+
+<%= render :template => 'rate_ratings/index' %>
