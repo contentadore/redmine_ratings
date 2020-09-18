@@ -1,0 +1,6 @@
+<% if @issue.status.name == 'Closed' %>
+  <p>
+    <label>Rating</label>
+    <%= number_field_tag 'issue[rating_list]', @issue.rating.try(:value), in: 1..10, :required => true %>
+  </p>
+<% end %>

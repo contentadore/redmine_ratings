@@ -1,0 +1,3 @@
+<% if issue.rating %>
+  <%= issue_fields_rows { |rows| rows.left "#{l(:rating)}", "#{issue.rating.value}" } %>
+<% end %>

@@ -7,41 +7,42 @@
 <% user = User.find(params[:id]) %>
 <% user_rate = Rate.where(user_id: user.id) %>
 
-      <div id="duplicaterRate11" style="display: none;">
+      <div id="duplicaterRate" style="display: none;">
               <fieldset class="box tabular">
                   <div class="massCreateRateForm">
                     <p>
-                      <label for="rate_tracker_id">Tracker Id</label>
-                      <%= select_tag "tracker", (options_from_collection_for_select(@trackers, "id", "name")), {:class => 'trackerId'} %>
+                      <%= label_tag 'rate_tracker_id', 'Tracker Id' %>
+                      <%= select_tag "tracker", (options_from_collection_for_select(@trackers, "id", "name")), {:class => 'trackerId', :include_blank => true, :selected=>@rate.tracker_id} %>
                     </p>
 
                     <p>
-                      <label for="rate_language_id">Language Id</label>
-                      <%= select_tag "language_id", (options_from_collection_for_select(@languages, "id", "value")), {:class => 'languageId'} %>
+                      <%= label_tag 'rate_language_id', 'Language Id' %>
+                      <%= select_tag "language_id", (options_from_collection_for_select(@languages, "id", "value")), {:class => 'languageId', :include_blank => true} %>
                     </p>
 
                     <p>
-                      <label for="rate_value">value</label>
+
+                      <%= label_tag 'rate_value', 'Value' %>
                       <input class="value" type="number" name="rate[value]" id="rate_value" value='<%= @rate.value %>'>
                     </p>
 
                     <p>
-                      <label for="rate_currency_id">Currency Id</label>
-                      <%= select_tag "currency_id", (options_from_collection_for_select(@currencies, "id", "value")), {:class => 'currencyId'} %>
+                      <%= label_tag 'rate_currency_id', 'Currency Id' %>
+                      <%= select_tag "currency_id", (options_from_collection_for_select(@currencies, "id", "value")), {:class => 'currencyId', :include_blank => true} %>
                     </p>
 
                     <p>
-                      <label for="rate_unit_qty">unit_qty</label>
+                      <%= label_tag 'rate_unit_qty', 'Unit Qty' %>
                       <input class="unitQty" type="number" name="rate[unit_qty]" id="rate_unit_qty" value='<%= @rate.unit_qty %>'>
                     </p>
 
                     <p>
-                      <label for="rate_unit_type_id">Unit Type Id</label>
+                      <%= label_tag 'rate_unit_type_id', 'Unit Type Id' %>
                       <input class="unitTypeId" type="number" name="rate[unit_type_id]" id="rate_unit_type_id" value='<%= @rate.unit_type_id %>'>
                     </p>
                   </div>
 
-                  <div class="divvv">
+                  <div class="insertAfterDiv">
                   </div>
 
                 </fieldset>
@@ -49,7 +50,7 @@
 
 <% if user_rate.any? %>
   <% user_rate.each do |rate| %>
-    <div id="duplicaterRate">
+    <div>
       <div class="splitcontent">
           <div class="splitcontentleft">
             <fieldset class="box tabular">
@@ -59,46 +60,40 @@
                   </p>
 
                   <p>
-                    <label for="rate_tracker_id">Tracker Id</label>
-                    <%= select_tag "tracker", (options_from_collection_for_select(@trackers, "id", "name")), {:class => 'trackerId'} %>
+                    <%= label_tag 'rate_tracker_id', 'Tracker Id' %>
+                    <%= select_tag "tracker", (options_from_collection_for_select(@trackers, "id", "name")), {:class => 'trackerId', :include_blank => true, :selected=>rate.tracker_id} %>
                   </p>
 
                   <p>
-                    <label for="rate_language_id">Language Id</label>
-                    <%= select_tag "language_id", (options_from_collection_for_select(@languages, "id", "value")), {:class => 'languageId'} %>
+
+                    <%= label_tag 'rate_language_id', 'Language Id' %>
+                    <%= select_tag "language_id", (options_from_collection_for_select(@languages, "id", "value")), {:class => 'languageId', :include_blank => true} %>
                   </p>
 
                   <p>
-                    <label for="rate_value">value</label>
+                    <%= label_tag 'rate_value', 'value' %>
                     <input class="value" type="number" name="rate[value]" id="rate_value" value='<%= rate.value %>'>
                   </p>
 
                   <p>
-                    <label for="rate_currency_id">Currency Id</label>
-                    <%= select_tag "currency_id", (options_from_collection_for_select(@currencies, "id", "value")), {:class => 'currencyId'} %>
+                    <%= label_tag 'rate_currency_id', 'Currency Id' %>
+                    <%= select_tag "currency_id", (options_from_collection_for_select(@currencies, "id", "value")), {:class => 'currencyId', :include_blank => true} %>
                   </p>
 
                   <p>
-                    <label for="rate_unit_qty">unit_qty</label>
+                    <%= label_tag 'rate_unit_qty', 'Unit Qty' %>
                     <input class="unitQty" type="number" name="rate[unit_qty]" id="rate_unit_qty" value='<%= rate.unit_qty %>'>
                   </p>
 
                   <p>
-                    <label for="rate_unit_type_id">Unit Type Id</label>
+                    <%= label_tag 'rate_unit_type_id', 'Unit Type Id' %>
                     <input class="unitTypeId" type="number" name="rate[unit_type_id]" id="rate_unit_type_id" value='<%= rate.unit_type_id %>'>
                   </p>
                 </div>
               </fieldset>
-
-
             </div>
-
-
-
-
-
       </div>
-      <div class="divvv">
+      <div class="insertAfterDiv">
       </div>
     </div>
 
@@ -117,48 +112,48 @@
 
 
 <% else %>
-  <div class="divvv">
+  <div class="insertAfterDiv">
   </div>
 
-  <div id="duplicaterRate" style="display: none;">
+  <div style="display: none;">
     <div class="splitcontent">
         <div class="splitcontentleft">
           <fieldset class="box tabular">
               <div class="massCreateRateForm">
                 <p>
-                  <label for="rate_tracker_id">Tracker Id</label>
-                  <%= select_tag "tracker", (options_from_collection_for_select(@trackers, "id", "name")), {:class => 'trackerId'} %>
+                  <%= label_tag 'rate_tracker_id', 'Tracker Id' %>
+                  <%= select_tag "tracker", (options_from_collection_for_select(@trackers, "id", "name")), {:class => 'trackerId', :include_blank => true, :selected=>@rate.tracker_id} %>
                 </p>
 
                 <p>
-                  <label for="rate_language_id">Language Id</label>
-                  <%= select_tag "language_id", (options_from_collection_for_select(@languages, "id", "value")), {:class => 'languageId'} %>
+                  <%= label_tag 'rate_language_id', 'Language Id' %>
+                  <%= select_tag "language_id", (options_from_collection_for_select(@languages, "id", "value")), {:class => 'languageId', :include_blank => true} %>
                 </p>
 
                 <p>
-                  <label for="rate_value">value</label>
+                  <%= label_tag 'rate_value', 'value' %>
                   <input class="value" type="number" name="rate[value]" id="rate_value" value='<%= @rate.value %>'>
                 </p>
 
                 <p>
-                  <label for="rate_currency_id">Currency Id</label>
-                  <%= select_tag "currency_id", (options_from_collection_for_select(@currencies, "id", "value")), {:class => 'currencyId'} %>
+                  <%= label_tag 'rate_currency_id', 'Currency Id' %>
+                  <%= select_tag "currency_id", (options_from_collection_for_select(@currencies, "id", "value")), {:class => 'currencyId', :include_blank => true} %>
                 </p>
 
                 <p>
-                  <label for="rate_unit_qty">unit_qty</label>
+                  <%= label_tag 'rate_unit_qty', 'unit_qty' %>
                   <input class="unitQty" type="number" name="rate[unit_qty]" id="rate_unit_qty" value='<%= @rate.unit_qty %>'>
                 </p>
 
                 <p>
-                  <label for="rate_unit_type_id">Unit Type Id</label>
+                  <%= label_tag 'rate_unit_type_id', 'Unit Type Id' %>
                   <input class="unitTypeId" type="number" name="rate[unit_type_id]" id="rate_unit_type_id" value='<%= @rate.unit_type_id %>'>
                 </p>
               </div>
             </fieldset>
           </div>
 
-          <div id="divvv">
+          <div id="insertAfterDiv">
           </div>
     </div>
   </div>
@@ -191,7 +186,7 @@ document.getElementById('rateButton').onclick = duplicateRate;
 
 
 var i = 0;
-var rateOriginal = document.getElementById('duplicaterRate11');
+var rateOriginal = document.getElementById('duplicaterRate');
 
 function duplicateRate() {
     var rateClone = rateOriginal.cloneNode(true);
@@ -199,7 +194,7 @@ function duplicateRate() {
     i = ++i
     rateClone.id = "rateDuplicetor" + i;
 
-    $(rateClone).insertAfter($(".divvv").last());
+    $(rateClone).insertAfter($(".insertAfterDiv").last());
 }
 
 function massCreateRate() {
@@ -242,11 +237,6 @@ function massUpdateRate() {
       params['rate'][i] = {};
 
       n = i-1;
-
-      alert(i)
-      alert(userRateCount)
-      alert(i > userRateCount)
-      alert($(".id").eq(n).val())
 
       if (i > userRateCount) {
         params['rate'][i]['id'] = 'nil';
