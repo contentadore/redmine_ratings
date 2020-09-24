@@ -1,0 +1,2 @@
+class WorkQualityRating < Rating
+end

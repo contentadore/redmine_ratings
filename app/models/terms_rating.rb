@@ -1,0 +1,2 @@
+class TermsRating < Rating
+end

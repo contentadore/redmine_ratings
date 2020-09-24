@@ -11,35 +11,31 @@ module RedmineRatings
 
           attr_accessor :rating_list
 
-          has_one :rating, dependent: :destroy
+          has_many :ratings, dependent: :destroy
 
           def current_rating
             rating.nil? ? nil : rating
           end
 
           def save_rating
-            rating_value = rating_list
+            rating_list.each do |rating_type, rating_value|
+              rating = Rating.find_by(type_id: rating_type, issue_id: id)
 
-            param = {}
-            param['value'] = rating_value
-
-
-
-            if Issue.find(id).rating.nil?
-              Rating.create(
-                issue_id: id,
-                value: rating_value,
-                type_id: User.current.type,
-                author_id: User.current.id
-              )
-            else
-
-              Issue.find(id).rating.update(
-                issue_id: id,
-                value: rating_value,
-                type_id: User.current.type,
-                author_id: User.current.id
-              )
+              if rating.nil?
+                Rating.create(
+                  issue_id: id,
+                  value: rating_value,
+                  type_id: rating_type,
+                  author_id: User.current.id
+                )
+              else
+                rating.update(
+                  issue_id: id,
+                  value: rating_value,
+                  type_id: rating_type,
+                  author_id: User.current.id
+                )
+              end
             end
           end
 
@@ -52,11 +48,13 @@ module RedmineRatings
         def safe_attributes_with_safe_rating=(attrs, user = User.current)
           self.safe_attributes_without_safe_rating = attrs
 
-          if attrs && attrs[:rating_list]
-            rating = attrs[:rating_list]
-            self.rating_list = rating
-          elsif rating
-            self.rating_list = rating.current
+          self.rating_list ||= {}
+
+          RatingType.all.each do |rt|
+            if attrs && attrs["rating_#{rt.value}"]
+              rating = attrs["rating_#{rt.value}"]
+              self.rating_list["#{rt.id}"] = rating
+            end
           end
         end
       end

@@ -1,6 +1,14 @@
+<% @rating_types = RatingType.all %>
+
 <% if @issue.status.name == 'Closed' %>
-  <p>
-    <label>Rating</label>
-    <%= number_field_tag 'issue[rating_list]', @issue.rating.try(:value), in: 1..10, :required => true %>
-  </p>
+  <div class="slidecontainer">
+    <% @rating_types.each do |rt| %>
+      <p>
+        <% rating = Rating.find_by(type_id: rt.id, issue_id: @issue.id) %>
+
+        <label><%= rt.value %></label>
+        <%= range_field_tag "issue[rating_#{rt.value}]", value = rating.try(:value), in: 1..10, step: 1 %>
+      </p>
+    <% end %>
+  </div>
 <% end %>

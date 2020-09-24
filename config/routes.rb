@@ -8,3 +8,6 @@ end
 
 resources :currencies do
 end
+
+resources :rating_types do
+end

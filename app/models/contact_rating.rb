@@ -1,0 +1,2 @@
+class ContactRating < Rating
+end

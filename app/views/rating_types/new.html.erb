@@ -1,0 +1,10 @@
+<%= form_for @rating_type do |f| %>
+  <p>
+    <%= f.label :value %>
+    <%= f.text_field :value, value: @rating_type.value, class: "value" %>
+  </p>
+
+  <p>
+    <%= f.submit %>
+  </p>
+<% end %>

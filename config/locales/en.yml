@@ -2,4 +2,5 @@ en:
   ratings_title: Ratings
   label_currencies: Currencies
   label_languages: Languages
+  label_rating_types: Rating Types
   rating: Rating

@@ -6,47 +6,46 @@
 
 <% user = User.find(params[:id]) %>
 <% user_rate = Rate.where(user_id: user.id) %>
+  <div id="duplicaterRate" style="display: none;">
+    <fieldset class="box tabular">
+        <div class="massCreateRateForm">
+          <p>
+            <%= label_tag 'rate_tracker_id', 'Tracker Id' %>
+            <%= select_tag "tracker", (options_for_select(Tracker.all.collect { |p| [ p.name, p.id ] }, :selected => @rate.tracker_id)), {:class => 'trackerId', :include_blank => true} %>
+          </p>
 
-      <div id="duplicaterRate" style="display: none;">
-              <fieldset class="box tabular">
-                  <div class="massCreateRateForm">
-                    <p>
-                      <%= label_tag 'rate_tracker_id', 'Tracker Id' %>
-                      <%= select_tag "tracker", (options_from_collection_for_select(@trackers, "id", "name")), {:class => 'trackerId', :include_blank => true, :selected=>@rate.tracker_id} %>
-                    </p>
+          <p>
+            <%= label_tag 'rate_language_id', 'Language Id' %>
+            <%= select_tag "language_id", (options_for_select(Language.all.collect { |p| [ p.value, p.id ] }, :selected => @rate.language_id)), {:class => 'languageId', :include_blank => true} %>
+          </p>
 
-                    <p>
-                      <%= label_tag 'rate_language_id', 'Language Id' %>
-                      <%= select_tag "language_id", (options_from_collection_for_select(@languages, "id", "value")), {:class => 'languageId', :include_blank => true} %>
-                    </p>
+          <p>
 
-                    <p>
+            <%= label_tag 'rate_value', 'Value' %>
+            <input class="value" type="number" name="rate[value]" id="rate_value" value='<%= @rate.value %>'>
+          </p>
 
-                      <%= label_tag 'rate_value', 'Value' %>
-                      <input class="value" type="number" name="rate[value]" id="rate_value" value='<%= @rate.value %>'>
-                    </p>
+          <p>
+            <%= label_tag 'rate_currency_id', 'Currency Id' %>
+            <%= select_tag "currency_id", (options_for_select(Currency.all.collect { |p| [ p.value, p.id ] }, :selected => @rate.currency_id)), {:class => 'currencyId', :include_blank => true} %>
+          </p>
 
-                    <p>
-                      <%= label_tag 'rate_currency_id', 'Currency Id' %>
-                      <%= select_tag "currency_id", (options_from_collection_for_select(@currencies, "id", "value")), {:class => 'currencyId', :include_blank => true} %>
-                    </p>
+          <p>
+            <%= label_tag 'rate_unit_qty', 'Unit Qty' %>
+            <input class="unitQty" type="number" name="rate[unit_qty]" id="rate_unit_qty" value='<%= @rate.unit_qty %>'>
+          </p>
 
-                    <p>
-                      <%= label_tag 'rate_unit_qty', 'Unit Qty' %>
-                      <input class="unitQty" type="number" name="rate[unit_qty]" id="rate_unit_qty" value='<%= @rate.unit_qty %>'>
-                    </p>
+          <p>
+            <%= label_tag 'rate_unit_type_id', 'Unit Type Id' %>
+            <input class="unitTypeId" type="number" name="rate[unit_type_id]" id="rate_unit_type_id" value='<%= @rate.unit_type_id %>'>
+          </p>
+        </div>
 
-                    <p>
-                      <%= label_tag 'rate_unit_type_id', 'Unit Type Id' %>
-                      <input class="unitTypeId" type="number" name="rate[unit_type_id]" id="rate_unit_type_id" value='<%= @rate.unit_type_id %>'>
-                    </p>
-                  </div>
+        <div class="insertAfterDiv">
+        </div>
 
-                  <div class="insertAfterDiv">
-                  </div>
-
-                </fieldset>
-              </div>
+      </fieldset>
+  </div>
 
 <% if user_rate.any? %>
   <% user_rate.each do |rate| %>
@@ -60,14 +59,13 @@
                   </p>
 
                   <p>
-                    <%= label_tag 'rate_tracker_id', 'Tracker Id' %>
-                    <%= select_tag "tracker", (options_from_collection_for_select(@trackers, "id", "name")), {:class => 'trackerId', :include_blank => true, :selected=>rate.tracker_id} %>
+                    <%= label_tag 'rate_tracker_id', 'Tracker Id1' %>
+                    <%= select_tag "tracker", (options_for_select(Tracker.all.collect { |p| [ p.name, p.id ] }, :selected => rate.tracker_id)), {:class => 'trackerId', :include_blank => true} %>
                   </p>
 
                   <p>
-
                     <%= label_tag 'rate_language_id', 'Language Id' %>
-                    <%= select_tag "language_id", (options_from_collection_for_select(@languages, "id", "value")), {:class => 'languageId', :include_blank => true} %>
+                    <%= select_tag "language_id", (options_for_select(Language.all.collect { |p| [ p.value, p.id ] }, :selected => rate.language_id)), {:class => 'languageId', :include_blank => true} %>
                   </p>
 
                   <p>
@@ -77,7 +75,7 @@
 
                   <p>
                     <%= label_tag 'rate_currency_id', 'Currency Id' %>
-                    <%= select_tag "currency_id", (options_from_collection_for_select(@currencies, "id", "value")), {:class => 'currencyId', :include_blank => true} %>
+                    <%= select_tag "currency_id", (options_for_select(Currency.all.collect { |p| [ p.value, p.id ] }, :selected => rate.currency_id)), {:class => 'currencyId', :include_blank => true} %>
                   </p>
 
                   <p>
@@ -122,12 +120,12 @@
               <div class="massCreateRateForm">
                 <p>
                   <%= label_tag 'rate_tracker_id', 'Tracker Id' %>
-                  <%= select_tag "tracker", (options_from_collection_for_select(@trackers, "id", "name")), {:class => 'trackerId', :include_blank => true, :selected=>@rate.tracker_id} %>
+                  <%= select_tag "tracker", (options_for_select(Tracker.all.collect { |p| [ p.name, p.id ] }, :selected => @rate.tracker_id)), {:class => 'trackerId', :include_blank => true} %>
                 </p>
 
                 <p>
                   <%= label_tag 'rate_language_id', 'Language Id' %>
-                  <%= select_tag "language_id", (options_from_collection_for_select(@languages, "id", "value")), {:class => 'languageId', :include_blank => true} %>
+                  <%= select_tag "language_id", (options_for_select(Language.all.collect { |p| [ p.value, p.id ] }, :selected => @rate.language_id)), {:class => 'languageId', :include_blank => true} %>
                 </p>
 
                 <p>
@@ -137,7 +135,7 @@
 
                 <p>
                   <%= label_tag 'rate_currency_id', 'Currency Id' %>
-                  <%= select_tag "currency_id", (options_from_collection_for_select(@currencies, "id", "value")), {:class => 'currencyId', :include_blank => true} %>
+                  <%= select_tag "currency_id", (options_for_select(Currency.all.collect { |p| [ p.value, p.id ] }, :selected => @rate.currency_id )), {:class => 'currencyId', :include_blank => true} %>
                 </p>
 
                 <p>

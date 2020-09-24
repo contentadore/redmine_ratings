@@ -1,3 +1,5 @@
-<% if issue.rating %>
-  <%= issue_fields_rows { |rows| rows.left "#{l(:rating)}", "#{issue.rating.value}" } %>
-<% end %>
+<p>
+  <% issue.ratings.each do |rating| %>
+      <%= issue_fields_rows { |rows| rows.left "#{RatingType.find(rating.type_id).value} Rating", "#{rating.value}" } %>
+  <% end %>
+</p>
