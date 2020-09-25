@@ -10,11 +10,12 @@ module RedmineRatings
           after_save :save_rating
 
           attr_accessor :rating_list
+          attr_accessor :language_list
 
           has_many :ratings, dependent: :destroy
 
           def current_rating
-            rating.nil? ? nil : rating
+            rating_list.nil? ? nil : rating_list
           end
 
           def save_rating
@@ -49,6 +50,11 @@ module RedmineRatings
           self.safe_attributes_without_safe_rating = attrs
 
           self.rating_list ||= {}
+
+          if attrs && attrs['language']
+            language = attrs["language"]
+            self.language_list = language
+          end
 
           RatingType.all.each do |rt|
             if attrs && attrs["rating_#{rt.value}"]
