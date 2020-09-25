@@ -2,6 +2,10 @@
 
 <% if @issue.status.name == 'Closed' %>
   <div class="slidecontainer">
+
+    <%= hidden_field_tag 'issue[language]', I18nData.languages["#{I18n.locale.upcase}"] %>
+
+
     <% @rating_types.each do |rt| %>
       <p>
         <% rating = Rating.find_by(type_id: rt.id, issue_id: @issue.id) %>
