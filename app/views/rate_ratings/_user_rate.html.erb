@@ -18,7 +18,6 @@
             <%= label_tag 'rate_language_id', 'Language Id' %>
             <%= select_tag "language_id", (options_for_select(Language.all.collect { |p| [ p.value, p.id ] }, :selected => @rate.language_id)), {:class => 'languageId', :include_blank => true} %>
           </p>
-
           <p>
 
             <%= label_tag 'rate_value', 'Value' %>
@@ -260,3 +259,10 @@ function massUpdateRate() {
 }
 
 <% end %>
+
+
+<style>
+  .tabular input, .tabular select {
+      width: 90%;
+  }
+</style>
