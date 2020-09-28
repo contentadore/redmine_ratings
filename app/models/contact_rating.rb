@@ -1,2 +1,0 @@
-class ContactRating < Rating
-end

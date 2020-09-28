@@ -1,2 +1,0 @@
-class WorkQualityRating < Rating
-end
