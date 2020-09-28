@@ -1,2 +1,0 @@
-class ProfessionalismRating < Rating
-end
