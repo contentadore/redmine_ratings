@@ -1,13 +1,13 @@
 <% @rating_types = RatingType.all %>
 
-<% if @issue.status.name == 'Closed' %>
-  <div class="slidecontainer">
-    <p>
-      <label>Text Language</label>
-      <%= select_tag "issue[language]", (options_for_select(Language.all.collect { |p| [ p.value, p.id ] })) %>
-    </p>
-  </div>
+<div class="slidecontainer">
+  <p>
+    <label>Text Language</label>
+    <%= select_tag "issue[language]", (options_for_select(Language.all.collect { |p| [ p.value, p.id ] })) %>
+  </p>
+</div>
 
+<% if @issue.status.name == 'Closed' %>
   <div class="slidecontainer">
     <% @rating_types.each do |rt| %>
       <p>
