@@ -2,15 +2,19 @@
 
 <% if @issue.status.name == 'Closed' %>
   <div class="slidecontainer">
-    <%= select_tag "issue[language]", (options_for_select(Language.all.collect { |p| [ p.value, p.id ] })) %>
+    <p>
+      <label>Text Language</label>
+      <%= select_tag "issue[language]", (options_for_select(Language.all.collect { |p| [ p.value, p.id ] })) %>
+    </p>
+  </div>
 
+  <div class="slidecontainer">
     <% @rating_types.each do |rt| %>
       <p>
         <% rating = Rating.find_by(type_id: rt.id, issue_id: @issue.id) %>
         <label><%= rt.value %></label>
         <%= range_field_tag "issue[rating_#{rt.value}]", value = rating.try(:value), in: 1..10, step: 1, :oninput=> "rating_#{rt.value}.value = issue_rating_#{rt.value}.value" %>
         <%= content_tag( :output, "#{rating.try(:value)}", :id=>"rating_#{rt.value}") %>
-
       </p>
     <% end %>
   </div>
