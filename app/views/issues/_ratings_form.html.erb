@@ -3,8 +3,8 @@
 <% if @issue.status.name == 'Closed' %>
   <div class="slidecontainer">
 
-    <%= hidden_field_tag 'issue[language]', I18nData.languages["#{I18n.locale.upcase}"] %>
 
+    <%= select_tag "issue[language]", (options_for_select(Language.all.collect { |p| [ p.value, p.id ] })) %>
 
     <% @rating_types.each do |rt| %>
       <p>
