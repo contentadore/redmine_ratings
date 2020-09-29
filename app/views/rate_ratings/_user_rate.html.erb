@@ -10,6 +10,14 @@
     <%= label_tag 'average_rating', 'Average Rating' %>
     <%= ratings.pluck("value").inject{ |sum,x| sum + x }.to_f / ratings.size %>
   </p>
+
+  <% RatingType.all.each do |type| %>
+    <p>
+      <%= label_tag "average_#{type.value}", "Average #{type.value}" %>
+      <%= ratings.where(type_id: type.id).pluck("value").inject{ |sum,x| sum + x }.to_f / ratings.where(type_id: type.id).size %>
+    </p>
+  <% end %>
+
 </fieldset>
 
 <div id="duplicaterRate" style="display: none;">
