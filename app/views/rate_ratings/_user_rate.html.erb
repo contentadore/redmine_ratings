@@ -4,11 +4,11 @@
 <% user = User.find(params[:id]) %>
 <% user_rate = Rate.where(user_id: user.id) %>
 
-<% ratings = Rating.where(id: user_rate.ids) %>
+<% ratings = Rating.where(rate_id: user_rate.ids) %>
 <fieldset class="box tabular">
   <p>
     <%= label_tag 'average_rating', 'Average Rating' %>
-    <%= ratings.pluck("value").inject(0){ |sum,x| sum + x } %>
+    <%= ratings.pluck("value").inject{ |sum,x| sum + x }.to_f / ratings.size %>
   </p>
 </fieldset>
 
@@ -64,7 +64,7 @@
                   </p>
 
                   <p>
-                    <%= label_tag 'rate_tracker_id', 'Tracker Id1' %>
+                    <%= label_tag 'rate_tracker_id', 'Tracker Id' %>
                     <%= select_tag "tracker", (options_for_select(Tracker.all.collect { |p| [ p.name, p.id ] }, :selected => rate.tracker_id)), {:class => 'trackerId', :include_blank => true} %>
                   </p>
 

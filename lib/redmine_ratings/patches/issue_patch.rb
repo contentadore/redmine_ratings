@@ -19,6 +19,16 @@ module RedmineRatings
           end
 
           def save_rating
+            issue = Issue.find(id)
+
+            rate_id = Rate.where(
+              user_id: issue.assigned_to_id,
+              tracker_id: issue.tracker_id,
+              language_id: language_list
+            ).ids.first
+
+
+
             rating_list.each do |rating_type, rating_value|
               rating = Rating.find_by(type_id: rating_type, issue_id: id)
 
@@ -27,14 +37,16 @@ module RedmineRatings
                   issue_id: id,
                   value: rating_value,
                   type_id: rating_type,
-                  author_id: User.current.id
+                  author_id: User.current.id,
+                  rate_id: rate_id
                 )
               else
                 rating.update(
                   issue_id: id,
                   value: rating_value,
                   type_id: rating_type,
-                  author_id: User.current.id
+                  author_id: User.current.id,
+                  rate_id: rate_id
                 )
               end
             end
