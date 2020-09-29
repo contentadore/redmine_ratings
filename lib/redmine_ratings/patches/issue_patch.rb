@@ -27,8 +27,6 @@ module RedmineRatings
               language_id: language_list
             ).ids.first
 
-
-
             rating_list.each do |rating_type, rating_value|
               rating = Rating.find_by(type_id: rating_type, issue_id: id)
 
