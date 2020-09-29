@@ -1,9 +1,9 @@
 class CreateCreateRatingTypeData < ActiveRecord::Migration[5.2]
   def up
-    RatingType.create(value: 'Contact Rating')
-    RatingType.create(value: 'Professionalism Rating')
-    RatingType.create(value: 'Deadline Rating')
-    RatingType.create(value: 'WorkQuality Rating')
+    RatingType.create(value: 'Contact')
+    RatingType.create(value: 'Professionalism')
+    RatingType.create(value: 'Deadline')
+    RatingType.create(value: 'WorkQuality')
   end
 
   def down
