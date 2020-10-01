@@ -1,7 +1,7 @@
-class RatingsController < ApplicationController
+class CaRatingsController < ApplicationController
   def mass_create
     params['params'].each do |p|
-      @rating = Rating.new
+      @rating = CaRating.new
 
       @rating.rate_id = p[1]['rate_id']
       @rating.issue_id = p[1]['issue_id']
@@ -16,23 +16,23 @@ class RatingsController < ApplicationController
 
   def show_by_rate_id
     @rate = Rate.find(params[:id])
-    @ratings = Rating.where(rate_id: rate.id)
+    @ratings = CaRating.where(rate_id: rate.id)
   end
 
   def edit_by_rate_id
     @rate = Rate.find(params[:id])
-    @ratings = Rating.where(rate_id: @rate.id)
+    @ratings = CaRating.where(rate_id: @rate.id)
   end
 
   def mass_update
     rate = Rate.find(params['params']['id'])
-    @ratings = Rating.where(rate_id: rate.id)
+    @ratings = CaRating.where(rate_id: rate.id)
 
     params['params'].each do |p|
 
       unless p[0] == 'id'
         if @ratings.count - 1 < p[0].to_i
-          @rating = Rating.new
+          @rating = CaRating.new
 
           @rating.rate_id = p[1]['rate_id']
           @rating.issue_id = p[1]['issue_id']
@@ -59,7 +59,7 @@ class RatingsController < ApplicationController
   end
 
   def new
-    @rating = Rating.new
+    @rating = CaRating.new
   end
 
   def create
@@ -67,18 +67,18 @@ class RatingsController < ApplicationController
       :rate_id, :issue_id, :type_id, :value, :author_role_id, :author_id
     )
 
-    @rating = Rating.new(rating_params)
+    @rating = CaRating.new(rating_params)
 
     @rating.save
     redirect_to @rating
   end
 
   def edit
-    @rating = Rating.find(params[:id])
+    @rating = CaRating.find(params[:id])
   end
 
   def update
-    @rating = Rating.find(params[:id])
+    @rating = CaRating.find(params[:id])
 
     rating_params = params.require(:rating).permit(
       :rate_id, :issue_id, :type_id, :value, :author_role_id, :author_id
@@ -89,7 +89,7 @@ class RatingsController < ApplicationController
   end
 
   def show
-    @rating = Rating.find(params[:id])
+    @rating = CaRating.find(params[:id])
   end
 
   def delete

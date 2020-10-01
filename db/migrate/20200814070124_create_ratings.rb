@@ -1,6 +1,6 @@
 class CreateRatings < ActiveRecord::Migration[5.2]
   def change
-    create_table :ratings do |t|
+    create_table :ca_ratings do |t|
       t.integer :rate_id
       t.integer :issue_id
       t.integer :type_id

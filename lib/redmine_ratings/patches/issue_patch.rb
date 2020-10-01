@@ -12,7 +12,7 @@ module RedmineRatings
           attr_accessor :rating_list
           attr_accessor :language_list
 
-          has_many :ratings, dependent: :destroy
+          has_many :ca_ratings, dependent: :destroy
 
           def current_rating
             rating_list.nil? ? nil : rating_list
@@ -28,10 +28,10 @@ module RedmineRatings
             ).ids.first
 
             rating_list.each do |rating_type, rating_value|
-              rating = Rating.find_by(type_id: rating_type, issue_id: id)
+              rating = CaRating.find_by(type_id: rating_type, issue_id: id)
 
               if rating.nil?
-                Rating.create(
+                CaRating.create(
                   issue_id: id,
                   value: rating_value,
                   type_id: rating_type,

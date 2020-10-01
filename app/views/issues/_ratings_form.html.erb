@@ -11,7 +11,7 @@
   <div class="slidecontainer">
     <% @rating_types.each do |rt| %>
       <p>
-        <% rating = Rating.find_by(type_id: rt.id, issue_id: @issue.id) %>
+        <% rating = CaRating.find_by(type_id: rt.id, issue_id: @issue.id) %>
         <label><%= rt.value %></label>
         <%= range_field_tag "issue[rating_#{rt.value}]", value = rating.try(:value), in: 1..10, step: 1, :oninput=> "rating_#{rt.value}.value = issue_rating_#{rt.value}.value" %>
         <%= content_tag( :output, "#{rating.try(:value)}", :id=>"rating_#{rt.value}") %>
