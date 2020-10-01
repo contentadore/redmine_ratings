@@ -1,5 +1,5 @@
 <p>
-  <% issue.ratings.each do |rating| %>
+  <% issue.ca_ratings.each do |rating| %>
       <%= issue_fields_rows { |rows| rows.left "#{RatingType.find(rating.type_id).value} Rating", "#{rating.value}" } %>
   <% end %>
 </p>
