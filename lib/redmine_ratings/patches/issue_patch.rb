@@ -12,6 +12,8 @@ module RedmineRatings
           attr_accessor :rating_list
           attr_accessor :language_list
 
+          attr_accessor :language
+
           has_many :ca_ratings, dependent: :destroy
 
           def current_rating
