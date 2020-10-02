@@ -7,7 +7,7 @@
   </p>
 </div>
 
-<% if @issue.status.name == 'Closed' %>
+<% if @issue.status.name == 'Closed' || @issue.status.name == 'Done' %>
   <div class="slidecontainer">
     <% @rating_types.each do |rt| %>
       <p>
