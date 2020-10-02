@@ -103,6 +103,22 @@
                 </div>
               </fieldset>
             </div>
+
+            <div class="splitcontentright">
+              <% ratings_by_rate = CaRating.where(rate_id: user_rate.ids, rate_id: rate.id) %>
+              <fieldset class="box tabular">
+                <p>
+                  <%= label_tag 'average_rating', 'Average Rating' %>
+                  <%= ratings_by_rate.pluck("value").inject{ |sum,x| sum + x }.to_f / ratings_by_rate.size %>
+                </p>
+
+                <% RatingType.all.each do |type| %>
+                  <p>
+                    <%= label_tag "average_#{type.value}", "Average #{type.value}" %>
+                    <%= ratings_by_rate.where(type_id: type.id).pluck("value").inject{ |sum,x| sum + x }.to_f / ratings_by_rate.where(type_id: type.id).size %>
+                  </p>
+                <% end %>
+            </div>
       </div>
       <div class="insertAfterDiv">
       </div>
