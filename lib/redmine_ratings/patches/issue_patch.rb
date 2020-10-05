@@ -29,25 +29,27 @@ module RedmineRatings
               language_id: language_list
             ).ids.first
 
-            rating_list.each do |rating_type, rating_value|
-              rating = CaRating.find_by(type_id: rating_type, issue_id: id)
+            if rating_list
+              rating_list.each do |rating_type, rating_value|
+                rating = CaRating.find_by(type_id: rating_type, issue_id: id)
 
-              if rating.nil?
-                CaRating.create(
-                  issue_id: id,
-                  value: rating_value,
-                  type_id: rating_type,
-                  author_id: User.current.id,
-                  rate_id: rate_id
-                )
-              else
-                rating.update(
-                  issue_id: id,
-                  value: rating_value,
-                  type_id: rating_type,
-                  author_id: User.current.id,
-                  rate_id: rate_id
-                )
+                if rating.nil?
+                  CaRating.create(
+                    issue_id: id,
+                    value: rating_value,
+                    type_id: rating_type,
+                    author_id: User.current.id,
+                    rate_id: rate_id
+                  )
+                else
+                  rating.update(
+                    issue_id: id,
+                    value: rating_value,
+                    type_id: rating_type,
+                    author_id: User.current.id,
+                    rate_id: rate_id
+                  )
+                end
               end
             end
           end
