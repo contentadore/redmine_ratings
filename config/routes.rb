@@ -11,3 +11,6 @@ end
 
 resources :rating_types do
 end
+
+resources :unit_types do
+end

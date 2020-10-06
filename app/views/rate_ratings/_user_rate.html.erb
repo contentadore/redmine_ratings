@@ -50,7 +50,7 @@
 
         <p>
           <%= label_tag 'rate_unit_type_id', 'Unit Type Id' %>
-          <input class="unitTypeId" type="number" name="rate[unit_type_id]" id="rate_unit_type_id" value='<%= @rate.unit_type_id %>'>
+          <%= select_tag "unit_type_id", (options_for_select(UnitType.all.collect { |p| [ p.value, p.id ] }, :selected => @rate.unit_type_id )), {:class => 'unitTypeId', :include_blank => true} %>
         </p>
       </div>
 
@@ -98,7 +98,7 @@
 
                   <p>
                     <%= label_tag 'rate_unit_type_id', 'Unit Type Id' %>
-                    <input class="unitTypeId" type="number" name="rate[unit_type_id]" id="rate_unit_type_id" value='<%= rate.unit_type_id %>'>
+                    <%= select_tag "unit_type_id", (options_for_select(UnitType.all.collect { |p| [ p.value, p.id ] }, :selected => rate.unit_type_id )), {:class => 'unitTypeId', :include_blank => true} %>
                   </p>
                 </div>
               </fieldset>
@@ -136,8 +136,6 @@
         :class => "icon icon-add", :id => "rateButton", :onlick => "duplicateRate()" %>
   </p>
 
-
-
 <% else %>
   <div class="insertAfterDiv">
   </div>
@@ -174,7 +172,7 @@
 
                 <p>
                   <%= label_tag 'rate_unit_type_id', 'Unit Type Id' %>
-                  <input class="unitTypeId" type="number" name="rate[unit_type_id]" id="rate_unit_type_id" value='<%= @rate.unit_type_id %>'>
+                  <%= select_tag "unit_type_id", (options_for_select(UnitType.all.collect { |p| [ p.value, p.id ] }, :selected => @rate.unit_type_id )), {:class => 'unitTypeId', :include_blank => true} %>
                 </p>
               </div>
             </fieldset>
@@ -184,7 +182,6 @@
           </div>
     </div>
   </div>
-
 
   <p>
     <%= link_to "Create", home_path, :remote => true,
@@ -197,7 +194,6 @@
   </p>
 <% end %>
 
-
 <%= javascript_tag do %>
 
 var original = document.getElementById('duplicater');
@@ -209,8 +205,6 @@ document.getElementById('rateButton').onclick = duplicateRate;
 <% else %>
   document.getElementById('massCreateRateId').onclick = massCreateRate;
 <% end %>
-
-
 
 var i = 0;
 var rateOriginal = document.getElementById('duplicaterRate');
@@ -288,7 +282,6 @@ function massUpdateRate() {
 }
 
 <% end %>
-
 
 <style>
   .tabular input, .tabular select {

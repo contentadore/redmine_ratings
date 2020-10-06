@@ -3,4 +3,5 @@ en:
   label_currencies: Currencies
   label_languages: Languages
   label_rating_types: Rating Types
+  label_unit_types: Unit Types
   rating: Rating
