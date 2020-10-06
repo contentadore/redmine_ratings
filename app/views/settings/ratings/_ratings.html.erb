@@ -3,11 +3,14 @@
     {:name => 'currencies', :partial => 'rate_ratings/currencies', :label => :label_currencies},
     {:name => 'languages', :partial => 'rate_ratings/languages', :label => :label_languages},
     {:name => 'rating_types', :partial => 'rate_ratings/rating_types', :label => :label_rating_types},
+    {:name => 'unit_types', :partial => 'rate_ratings/unit_types', :label => :label_unit_types},
+
   ] %>
 <% end %>
 
 <% @currencies = Currency.all %>
 <% @languages = Language.all %>
 <% @rating_types = RatingType.all %>
+<% @unit_types = UnitType.all%>
 
 <%= render :template => 'rate_ratings/index' %>
