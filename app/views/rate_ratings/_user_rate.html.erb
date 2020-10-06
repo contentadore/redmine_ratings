@@ -100,6 +100,11 @@
                     <%= label_tag 'rate_unit_type_id', 'Unit Type Id' %>
                     <%= select_tag "unit_type_id", (options_for_select(UnitType.all.collect { |p| [ p.value, p.id ] }, :selected => rate.unit_type_id )), {:class => 'unitTypeId', :include_blank => true} %>
                   </p>
+
+                  <p>
+                    <%= link_to "Destroy", rate, method: :delete, data: { confirm: "Are you sure?" } %>
+                  </p>
+
                 </div>
               </fieldset>
             </div>

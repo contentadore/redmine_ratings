@@ -14,3 +14,6 @@ end
 
 resources :unit_types do
 end
+
+resources :rates, only: [:destroy] do
+end
