@@ -3,7 +3,7 @@
 <div class="slidecontainer">
   <p>
     <label>Text Language</label>
-    <%= select("issue", "language", Language.all.collect {|p| [ p.value, p.id ] }, {:include_blank => true}, {:required => true}) %>
+    <%= select_tag "issue[language_id]", (options_for_select(Language.all.collect { |p| [ p.value, p.id ] }, :selected => @issue.issue_language.try(:value) )), {:include_blank => true} %>
   </p>
 </div>
 

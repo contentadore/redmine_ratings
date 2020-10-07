@@ -10,15 +10,10 @@ module RedmineRatings
           after_save :save_rating
 
           attr_accessor :rating_list
-          attr_accessor :language_list
-
-          attr_accessor :language
+          attr_accessor :language_id
 
           has_many :ca_ratings, dependent: :destroy
-
-          def current_rating
-            rating_list.nil? ? nil : rating_list
-          end
+          has_one :issue_language, dependent: :destroy
 
           def save_rating
             issue = Issue.find(id)
@@ -26,8 +21,14 @@ module RedmineRatings
             rate_id = Rate.where(
               user_id: issue.assigned_to_id,
               tracker_id: issue.tracker_id,
-              language_id: language_list
+              language_id: language_id
             ).ids.first
+
+            if issue.issue_language
+              issue_language.update(value: language_id)
+            else
+              create_issue_language(value: language_id)
+            end
 
             if rating_list
               rating_list.each do |rating_type, rating_value|
@@ -65,9 +66,8 @@ module RedmineRatings
 
           self.rating_list ||= {}
 
-          if attrs && attrs['language']
-            language = attrs["language"]
-            self.language_list = language
+          if attrs && attrs['language_id']
+            self.language_id = attrs["language_id"]
           end
 
           RatingType.all.each do |rt|
