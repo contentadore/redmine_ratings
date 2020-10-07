@@ -5,3 +5,5 @@ en:
   label_rating_types: Rating Types
   label_unit_types: Unit Types
   rating: Rating
+  label_accesses: Accesses
+  rating_field: Rating
