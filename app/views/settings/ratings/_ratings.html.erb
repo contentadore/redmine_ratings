@@ -1,5 +1,6 @@
 <% def rate_settings_tabs %>
   <% tabs = [
+    {:name => 'accesses', :partial => 'settings/redmine_ratings', :label => :label_accesses},
     {:name => 'currencies', :partial => 'rate_ratings/currencies', :label => :label_currencies},
     {:name => 'languages', :partial => 'rate_ratings/languages', :label => :label_languages},
     {:name => 'rating_types', :partial => 'rate_ratings/rating_types', :label => :label_rating_types},

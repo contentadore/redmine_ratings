@@ -1,0 +1,28 @@
+<% role_ids = @settings['rating_role_ids'] %>
+
+<div class="splitcontentleft">
+  <div class="box tabular">
+    <h4><%= l(:rating_field) %></h4>
+
+    <fieldset class="box tabular"><legend><%= l(:field_visible) %></legend>
+      <label class="block">
+        <%= radio_button_tag 'settings[rating_visible]', 1, @settings['rating_visible'].to_b, :id => 'rating_visible_on', :data => {:disables => '.rating_role input'} %>
+        <%= l(:label_visibility_public) %>
+      </label>
+
+      <label class="block">
+        <%= radio_button_tag 'settings[rating_visible]', 0, !@settings['rating_visible'].to_b, :id => 'rating_visible_off', :data => {:enables => '.rating_role input'} %>
+        <%= l(:label_visibility_roles) %>:
+      </label>
+
+      <% Role.givable.sorted.each do |role| %>
+        <label class="block rating_role" style="padding-left:2em;">
+          <%= check_box_tag 'settings[rating_role_ids][]', role.id, role_ids.nil? ? false : role_ids.include?(role.id.to_s) , :id => nil %>
+          <%= role.name %>
+        </label>
+      <% end %>
+
+      <%= hidden_field_tag 'settings[rating_role_ids][]', '' %>
+    </fieldset>
+  </div>
+</div>

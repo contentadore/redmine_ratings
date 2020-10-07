@@ -7,15 +7,19 @@
   </p>
 </div>
 
-<% if @issue.status.name == 'Closed' || @issue.status.name == 'Done' %>
-  <div class="slidecontainer">
-    <% @rating_types.each do |rt| %>
-      <p>
-        <% rating = CaRating.find_by(type_id: rt.id, issue_id: @issue.id) %>
-        <label><%= rt.value %></label>
-        <%= range_field_tag "issue[rating_#{rt.value}]", value = rating.try(:value), in: 1..10, step: 1, :oninput=> "rating_#{rt.value}.value = issue_rating_#{rt.value}.value" %>
-        <%= content_tag( :output, "#{rating.try(:value)}", :id=>"rating_#{rt.value}") %>
-      </p>
-    <% end %>
-  </div>
+<% if User.current.admin? || Setting.redmine_ratings['rating_visible'] == "1" || (User.current.roles.ids.any? && (User.current.roles.ids.to_a.map(&:to_s) & Setting.redmine_ratings['rating_role_ids'].to_a.map(&:to_s)).any? && Setting.redmine_ratings['rating_visible'] == "0") %>
+
+  <% if @issue.status.name == 'Closed' || @issue.status.name == 'Done' %>
+    <div class="slidecontainer">
+      <% @rating_types.each do |rt| %>
+        <p>
+          <% rating = CaRating.find_by(type_id: rt.id, issue_id: @issue.id) %>
+          <label><%= rt.value %></label>
+          <%= range_field_tag "issue[rating_#{rt.value}]", value = rating.try(:value), in: 1..10, step: 1, :oninput=> "rating_#{rt.value}.value = issue_rating_#{rt.value}.value" %>
+          <%= content_tag( :output, "#{rating.try(:value)}", :id=>"rating_#{rt.value}") %>
+        </p>
+      <% end %>
+    </div>
+  <% end %>
+
 <% end %>
