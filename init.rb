@@ -11,6 +11,9 @@ Redmine::Plugin.register :redmine_ratings do
   settings :default => {
     'rating_visible' => '1',
     'rating_role_ids' => [''],
+    'lang_visible' => '1',
+    'lang_tracker_ids' => [''],
+    'lang_role_ids' => [''],
   }, :partial => 'settings/ratings/ratings'
 
   menu :admin_menu, :ratings, {:controller => 'settings', :action => 'plugin', :id => "redmine_ratings"}, :caption => :ratings_title, :html => {:class => 'icon'}
