@@ -12,10 +12,8 @@
 <% end %>
 
 
-
-<% if Setting.plugin_redmine_ratings['rating_visible'] == "1" || (User.current.roles.ids.any? && (User.current.roles.ids.to_a.map(&:to_s) & Setting.plugin_redmine_ratings['rating_role_ids'].to_a.map(&:to_s)).any? && Setting.plugin_redmine_ratings['rating_visible'] == "0") %>
-
-  <% if User.current.admin? || @issue.status.name == 'Closed' || @issue.status.name == 'Done' %>
+<% if User.current.admin? || Setting.plugin_redmine_ratings['rating_visible'] == "1" || (User.current.roles.ids.any? && (User.current.roles.ids.to_a.map(&:to_s) & Setting.plugin_redmine_ratings['rating_role_ids'].to_a.map(&:to_s)).any? && Setting.plugin_redmine_ratings['rating_visible'] == "0") %>
+  <% if  @issue.status.name == 'Closed' || @issue.status.name == 'Done' %>
     <div class="slidecontainer">
       <% @rating_types.each do |rt| %>
         <p>
@@ -27,5 +25,4 @@
       <% end %>
     </div>
   <% end %>
-
 <% end %>
