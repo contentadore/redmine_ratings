@@ -33,6 +33,7 @@ module RedmineRatings
             if rating_list
               rating_list.each do |rating_type, rating_value|
                 rating = CaRating.find_by(type_id: rating_type, issue_id: id)
+                author_role_id = User.current.roles.first
 
                 if rating.nil?
                   CaRating.create(
@@ -40,7 +41,8 @@ module RedmineRatings
                     value: rating_value,
                     type_id: rating_type,
                     author_id: User.current.id,
-                    rate_id: rate_id
+                    rate_id: rate_id,
+                    author_role_id: author_role_id
                   )
                 else
                   rating.update(
@@ -48,7 +50,8 @@ module RedmineRatings
                     value: rating_value,
                     type_id: rating_type,
                     author_id: User.current.id,
-                    rate_id: rate_id
+                    rate_id: rate_id,
+                    author_role_id: author_role_id
                   )
                 end
               end
