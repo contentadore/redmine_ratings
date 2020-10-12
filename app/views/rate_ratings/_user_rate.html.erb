@@ -23,34 +23,42 @@
 <div id="duplicaterRate" style="display: none;">
   <fieldset class="box tabular">
       <div class="massCreateRateForm">
+        <p style="display: none;">
+          <input class="create_rate[id][]" type="number" name="create_rate[id][]" id="rate_id" value='<%= @rate.id %>'>
+        </p>
+
+        <p style="display: none;">
+          <input class="create_rate[user_id][]" type="number" name="create_rate[user_id][]" id="rate_id" value='<%= user.id %>'>
+        </p>
+
         <p>
           <%= label_tag 'rate_tracker_id', 'Tracker Id' %>
-          <%= select_tag "tracker", (options_for_select(Tracker.all.collect { |p| [ p.name, p.id ] }, :selected => @rate.tracker_id)), {:class => 'trackerId', :include_blank => true} %>
+          <%= select_tag "create_rate[tracker][]", (options_for_select(Tracker.all.collect { |p| [ p.name, p.id ] }, :selected => @rate.tracker_id)), {:class => 'trackerId', :include_blank => true} %>
         </p>
 
         <p>
           <%= label_tag 'rate_language_id', 'Language Id' %>
-          <%= select_tag "language_id", (options_for_select(Language.all.collect { |p| [ p.value, p.id ] }, :selected => @rate.language_id)), {:class => 'languageId', :include_blank => true} %>
+          <%= select_tag "create_rate[language_id][]", (options_for_select(Language.all.collect { |p| [ p.value, p.id ] }, :selected => @rate.language_id)), {:class => 'languageId', :include_blank => true} %>
         </p>
         <p>
 
           <%= label_tag 'rate_value', 'Value' %>
-          <input class="value" type="number" name="rate[value]" id="rate_value" value='<%= @rate.value %>'>
+          <input class="create_rate[value][]" type="number" name="create_rate[value][]" id="rate_value" value='<%= @rate.value %>'>
         </p>
 
         <p>
           <%= label_tag 'rate_currency_id', 'Currency Id' %>
-          <%= select_tag "currency_id", (options_for_select(Currency.all.collect { |p| [ p.value, p.id ] }, :selected => @rate.currency_id)), {:class => 'currencyId', :include_blank => true} %>
+          <%= select_tag "create_rate[currency_id][]", (options_for_select(Currency.all.collect { |p| [ p.value, p.id ] }, :selected => @rate.currency_id)), {:class => 'currencyId', :include_blank => true} %>
         </p>
 
         <p>
           <%= label_tag 'rate_unit_qty', 'Unit Qty' %>
-          <input class="unitQty" type="number" name="rate[unit_qty]" id="rate_unit_qty" value='<%= @rate.unit_qty %>'>
+          <input class="create_rate[unitQty][]" type="number" name="create_rate[unit_qty][]" id="rate_unit_qty" value='<%= @rate.unit_qty %>'>
         </p>
 
         <p>
           <%= label_tag 'rate_unit_type_id', 'Unit Type Id' %>
-          <%= select_tag "unit_type_id", (options_for_select(UnitType.all.collect { |p| [ p.value, p.id ] }, :selected => @rate.unit_type_id )), {:class => 'unitTypeId', :include_blank => true} %>
+          <%= select_tag "create_rate[unit_type_id][]", (options_for_select(UnitType.all.collect { |p| [ p.value, p.id ] }, :selected => @rate.unit_type_id )), {:class => 'unitTypeId', :include_blank => true} %>
         </p>
       </div>
 
@@ -68,37 +76,41 @@
             <fieldset class="box tabular">
                 <div class="massCreateRateForm">
                   <p style="display: none;">
-                    <input class="id" type="number" name="rate[id]" id="rate_id" value='<%= rate.id %>'>
+                    <input class="update_rate[id]" type="number" name='update_rate[<%= rate.id %>][id]' id="rate_id" value='<%= rate.id %>'>
+                  </p>
+
+                  <p style="display: none;">
+                    <input class="update_rate[user_id][]" type="number" name="update_rate[id][]" id="rate_id" value='<%= user.id %>'>
                   </p>
 
                   <p>
                     <%= label_tag 'rate_tracker_id', 'Tracker Id' %>
-                    <%= select_tag "tracker", (options_for_select(Tracker.all.collect { |p| [ p.name, p.id ] }, :selected => rate.tracker_id)), {:class => 'trackerId', :include_blank => true} %>
+                    <%= select_tag "update_rate[#{rate.id}][tracker]", (options_for_select(Tracker.all.collect { |p| [ p.name, p.id ] }, :selected => rate.tracker_id)), {:class => 'trackerId', :include_blank => true} %>
                   </p>
 
                   <p>
                     <%= label_tag 'rate_language_id', 'Language Id' %>
-                    <%= select_tag "language_id", (options_for_select(Language.all.collect { |p| [ p.value, p.id ] }, :selected => rate.language_id)), {:class => 'languageId', :include_blank => true} %>
+                    <%= select_tag "update_rate[#{rate.id}][language_id]", (options_for_select(Language.all.collect { |p| [ p.value, p.id ] }, :selected => rate.language_id)), {:class => 'languageId', :include_blank => true} %>
                   </p>
 
                   <p>
                     <%= label_tag 'rate_value', 'value' %>
-                    <input class="value" type="number" name="rate[value]" id="rate_value" value='<%= rate.value %>'>
+                    <input class='update_rate[<%= rate.id %>][value]' type="number" name='update_rate[<%= rate.id %>][value]' id="rate_value" value='<%= rate.value %>'>
                   </p>
 
                   <p>
                     <%= label_tag 'rate_currency_id', 'Currency Id' %>
-                    <%= select_tag "currency_id", (options_for_select(Currency.all.collect { |p| [ p.value, p.id ] }, :selected => rate.currency_id)), {:class => 'currencyId', :include_blank => true} %>
+                    <%= select_tag "update_rate[#{rate.id}][currency_id]", (options_for_select(Currency.all.collect { |p| [ p.value, p.id ] }, :selected => rate.currency_id)), {:class => 'currencyId', :include_blank => true} %>
                   </p>
 
                   <p>
                     <%= label_tag 'rate_unit_qty', 'Unit Qty' %>
-                    <input class="unitQty" type="number" name="rate[unit_qty]" id="rate_unit_qty" value='<%= rate.unit_qty %>'>
+                    <input class='update_rate[<%= rate.id %>][unitQty]' type="number" name='update_rate[<%= rate.id %>][unit_qty]' id="rate_unit_qty" value='<%= rate.unit_qty %>'>
                   </p>
 
                   <p>
                     <%= label_tag 'rate_unit_type_id', 'Unit Type Id' %>
-                    <%= select_tag "unit_type_id", (options_for_select(UnitType.all.collect { |p| [ p.value, p.id ] }, :selected => rate.unit_type_id )), {:class => 'unitTypeId', :include_blank => true} %>
+                    <%= select_tag "update_rate[#{rate.id}][unit_type_id]", (options_for_select(UnitType.all.collect { |p| [ p.value, p.id ] }, :selected => rate.unit_type_id )), {:class => 'unitTypeId', :include_blank => true} %>
                   </p>
 
                   <p>
@@ -150,34 +162,42 @@
         <div class="splitcontentleft">
           <fieldset class="box tabular">
               <div class="massCreateRateForm">
+                <p style="display: none;">
+                  <input class="rate[id]" type="number" name="rate[id]" id="rate_id" value='<%= @rate.id %>'>
+                </p>
+
+                <p style="display: none;">
+                  <input class="create_rate[user_id][]" type="number" name="create_rate[user_id][]" id="rate_id" value='<%= user.id %>'>
+                </p>
+
                 <p>
                   <%= label_tag 'rate_tracker_id', 'Tracker Id' %>
-                  <%= select_tag "tracker", (options_for_select(Tracker.all.collect { |p| [ p.name, p.id ] }, :selected => @rate.tracker_id)), {:class => 'trackerId', :include_blank => true} %>
+                  <%= select_tag "create_rate[tracker][]", (options_for_select(Tracker.all.collect { |p| [ p.name, p.id ] }, :selected => @rate.tracker_id)), {:class => 'trackerId', :include_blank => true} %>
                 </p>
 
                 <p>
                   <%= label_tag 'rate_language_id', 'Language Id' %>
-                  <%= select_tag "language_id", (options_for_select(Language.all.collect { |p| [ p.value, p.id ] }, :selected => @rate.language_id)), {:class => 'languageId', :include_blank => true} %>
+                  <%= select_tag "create_rate[language_id][]", (options_for_select(Language.all.collect { |p| [ p.value, p.id ] }, :selected => @rate.language_id)), {:class => 'languageId', :include_blank => true} %>
                 </p>
 
                 <p>
                   <%= label_tag 'rate_value', 'value' %>
-                  <input class="value" type="number" name="rate[value]" id="rate_value" value='<%= @rate.value %>'>
+                  <input class="create_rate[value][]" type="number" name="create_rate[value][]" id="rate_value" value='<%= @rate.value %>'>
                 </p>
 
                 <p>
                   <%= label_tag 'rate_currency_id', 'Currency Id' %>
-                  <%= select_tag "currency_id", (options_for_select(Currency.all.collect { |p| [ p.value, p.id ] }, :selected => @rate.currency_id )), {:class => 'currencyId', :include_blank => true} %>
+                  <%= select_tag "create_rate[currency_id][]", (options_for_select(Currency.all.collect { |p| [ p.value, p.id ] }, :selected => @rate.currency_id )), {:class => 'currencyId', :include_blank => true} %>
                 </p>
 
                 <p>
                   <%= label_tag 'rate_unit_qty', 'unit_qty' %>
-                  <input class="unitQty" type="number" name="rate[unit_qty]" id="rate_unit_qty" value='<%= @rate.unit_qty %>'>
+                  <input class="create_rate[unitQty][]" type="number" name="create_rate[unit_qty][]" id="rate_unit_qty" value='<%= @rate.unit_qty %>'>
                 </p>
 
                 <p>
                   <%= label_tag 'rate_unit_type_id', 'Unit Type Id' %>
-                  <%= select_tag "unit_type_id", (options_for_select(UnitType.all.collect { |p| [ p.value, p.id ] }, :selected => @rate.unit_type_id )), {:class => 'unitTypeId', :include_blank => true} %>
+                  <%= select_tag "create_rate[unit_type_id][]", (options_for_select(UnitType.all.collect { |p| [ p.value, p.id ] }, :selected => @rate.unit_type_id )), {:class => 'unitTypeId', :include_blank => true} %>
                 </p>
               </div>
             </fieldset>
@@ -200,6 +220,7 @@
 <% end %>
 
 <%= javascript_tag do %>
+
 
 var original = document.getElementById('duplicater');
 
