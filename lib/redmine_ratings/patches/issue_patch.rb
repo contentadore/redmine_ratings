@@ -70,7 +70,7 @@ module RedmineRatings
           self.rating_list ||= {}
 
           if attrs && attrs['language_id']
-            self.language_id = attrs["language_id"]
+            self.language_id = attrs['language_id']
           end
 
           RatingType.all.each do |rt|
