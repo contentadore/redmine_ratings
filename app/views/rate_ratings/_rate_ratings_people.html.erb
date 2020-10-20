@@ -153,10 +153,6 @@
         :class => "icon icon-add", :id => "rateButton", :onlick => "duplicateRate()" %>
   </p>
 
-  <p>
-    <%= submit_tag "Edit this article" %>
-  </p>
-
 <% else %>
   <div class="insertAfterDiv">
   </div>
@@ -221,14 +217,7 @@
     <%= link_to "Add Rate", home_path, :remote => true,
         :class => "icon icon-add", :id => "rateButton", :onlick => "duplicateRate()" %>
   </p>
-
-  <p>
-    <%= submit_tag "Edit this article" %>
-  </p>
-
 <% end %>
-
-
 
 <%= javascript_tag do %>
 
@@ -263,9 +252,6 @@ function massCreateRate() {
 
   for (let i = 0; i < massCreateRateFormCount; i++) {
     if ($(".unitQty").eq(i).val() !== '' && $(".value").eq(i).val() !== '') {
-
-      alert($(".trackerId").eq(i).val())
-
       params['rate'][i] = {};
       params['rate'][i]['user_id'] = <%= user.id %>;
       params['rate'][i]['tracker_id'] = $(".trackerId").eq(i).val();

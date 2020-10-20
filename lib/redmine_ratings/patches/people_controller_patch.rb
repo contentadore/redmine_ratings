@@ -1,14 +1,14 @@
-require_dependency 'users_controller'
-require_dependency 'user'
+# require_dependency 'people_controller'
+# require_dependency 'people'
 
 module RedmineRatings
   module Patches
-    module UsersControllerPatch
+    module PeopleControllerPatch
       def self.included(base)
         base.class_eval do
-          before_action :save_kw, only: [:create, :update]
+          before_action :save_rates, only: [:update]
 
-          def save_kw
+          def save_rates
             if params['update_rate']
               params['update_rate'].to_enum.to_h.each do |key, value|
                 unless value.kind_of?(Array)
@@ -55,6 +55,8 @@ module RedmineRatings
   end
 end
 
-unless UsersController.included_modules.include?(RedmineRatings::Patches::UsersControllerPatch)
-  UsersController.send(:include, RedmineRatings::Patches::UsersControllerPatch)
+if Redmine::Plugin.installed?(:redmine_people)
+  unless PeopleController.included_modules.include?(RedmineRatings::Patches::PeopleControllerPatch)
+    PeopleController.send(:include, RedmineRatings::Patches::PeopleControllerPatch)
+  end
 end
