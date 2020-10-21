@@ -143,20 +143,6 @@
 
   <% end %>
 
-  <p>
-    <%= link_to "Update", home_path, :remote => true,
-        :id => "massUpdateRateId", :onlick => "massUpdateRate()" %>
-  </p>
-
-  <p>
-    <%= link_to "Add Rate", home_path, :remote => true,
-        :class => "icon icon-add", :id => "rateButton", :onlick => "duplicateRate()" %>
-  </p>
-
-  <p>
-    <%= submit_tag "Edit this article" %>
-  </p>
-
 <% else %>
   <div class="insertAfterDiv">
   </div>
@@ -211,115 +197,6 @@
           </div>
     </div>
   </div>
-
-  <p>
-    <%= link_to "Create", home_path, :remote => true,
-        :id => "massCreateRateId", :onlick => "massCreateRate()" %>
-  </p>
-
-  <p>
-    <%= link_to "Add Rate", home_path, :remote => true,
-        :class => "icon icon-add", :id => "rateButton", :onlick => "duplicateRate()" %>
-  </p>
-
-  <p>
-    <%= submit_tag "Edit this article" %>
-  </p>
-
-<% end %>
-
-
-
-<%= javascript_tag do %>
-
-
-var original = document.getElementById('duplicater');
-
-document.getElementById('rateButton').onclick = duplicateRate;
-
-<% if user_rate.any? %>
-  document.getElementById('massUpdateRateId').onclick = massUpdateRate;
-<% else %>
-  document.getElementById('massCreateRateId').onclick = massCreateRate;
-<% end %>
-
-var i = 0;
-var rateOriginal = document.getElementById('duplicaterRate');
-
-function duplicateRate() {
-    var rateClone = rateOriginal.cloneNode(true);
-    rateClone.style.display = "block";
-    i = ++i
-    rateClone.id = "rateDuplicetor" + i;
-
-    $(rateClone).insertAfter($(".insertAfterDiv").last());
-}
-
-function massCreateRate() {
-  var params = {};
-  var massCreateRateFormCount = $( ".massCreateRateForm" ).length;
-
-  params['rate'] = {};
-
-  for (let i = 0; i < massCreateRateFormCount; i++) {
-    if ($(".unitQty").eq(i).val() !== '' && $(".value").eq(i).val() !== '') {
-
-      alert($(".trackerId").eq(i).val())
-
-      params['rate'][i] = {};
-      params['rate'][i]['user_id'] = <%= user.id %>;
-      params['rate'][i]['tracker_id'] = $(".trackerId").eq(i).val();
-      params['rate'][i]['language_id'] = $(".languageId").eq(i).val();
-      params['rate'][i]['value'] = $(".value").eq(i).val();
-      params['rate'][i]['currency_id'] = $(".currencyId").eq(i).val();
-      params['rate'][i]['unit_qty'] = $(".unitQty").eq(i).val();
-      params['rate'][i]['unit_type_id'] = $(".unitTypeId").eq(i).val();
-    }
-  }
-
-  $.ajax({
-    type: "POST",
-    url: "/rate_ratings/mass_create",
-    data: { params }
-  })
-}
-
-function massUpdateRate() {
-  var params = {};
-  var massCreateRateFormCount = $( ".massCreateRateForm" ).length;
-  var userRateCount = <%= user_rate.count %>
-
-  params['rate'] = {};
-
-
-  for (let i = 0; i < massCreateRateFormCount; i++) {
-    if ($(".unitQty").eq(i).val() !== '' && $(".value").eq(i).val() !== '') {
-      params['rate'][i] = {};
-
-      n = i-1;
-
-      if (i > userRateCount) {
-        params['rate'][i]['id'] = 'nil';
-      } else {
-        params['rate'][i]['id'] = $(".id").eq(n).val();
-      }
-
-      params['rate'][i]['user_id'] = <%= user.id %>;
-      params['rate'][i]['tracker_id'] = $(".trackerId").eq(i).val();
-      params['rate'][i]['language_id'] = $(".languageId").eq(i).val();
-      params['rate'][i]['value'] = $(".value").eq(i).val();
-      params['rate'][i]['currency_id'] = $(".currencyId").eq(i).val();
-      params['rate'][i]['unit_qty'] = $(".unitQty").eq(i).val();
-      params['rate'][i]['unit_type_id'] = $(".unitTypeId").eq(i).val();
-    }
-  }
-
-  $.ajax({
-    type: "PUT",
-    url: "/rate_ratings/mass_update",
-    data: { params }
-  })
-}
 
 <% end %>
 

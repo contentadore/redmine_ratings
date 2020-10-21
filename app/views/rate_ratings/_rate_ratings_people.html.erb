@@ -1,316 +1,39 @@
-<% @rate = Rate.new %>
-<% @rating = CaRating.new %>
-
 <% user = User.find(params[:id]) %>
 <% user_rate = Rate.where(user_id: user.id) %>
-
 <% ratings = CaRating.where(rate_id: user_rate.ids) %>
-<fieldset class="box tabular">
-  <p>
-    <%= label_tag 'average_rating', 'Average Rating' %>
-    <%= ratings.pluck("value").inject{ |sum,x| sum + x }.to_f / ratings.size %>
-  </p>
 
-  <% RatingType.all.each do |type| %>
-    <p>
-      <%= label_tag "average_#{type.value}", "Average #{type.value}" %>
-      <%= ratings.where(type_id: type.id).pluck("value").inject{ |sum,x| sum + x }.to_f / ratings.where(type_id: type.id).size %>
-    </p>
-  <% end %>
-
-</fieldset>
-
-<div id="duplicaterRate" style="display: none;">
-  <fieldset class="box tabular">
-      <div class="massCreateRateForm">
-        <p style="display: none;">
-          <input class="create_rate[id][]" type="number" name="create_rate[id][]" id="rate_id" value='<%= @rate.id %>'>
-        </p>
-
-        <p style="display: none;">
-          <input class="create_rate[user_id][]" type="number" name="create_rate[user_id][]" id="rate_id" value='<%= user.id %>'>
-        </p>
-
-        <p>
-          <%= label_tag 'rate_tracker_id', 'Tracker Id' %>
-          <%= select_tag "create_rate[tracker][]", (options_for_select(Tracker.all.collect { |p| [ p.name, p.id ] }, :selected => @rate.tracker_id)), {:class => 'trackerId', :include_blank => true} %>
-        </p>
-
-        <p>
-          <%= label_tag 'rate_language_id', 'Language Id' %>
-          <%= select_tag "create_rate[language_id][]", (options_for_select(Language.all.collect { |p| [ p.value, p.id ] }, :selected => @rate.language_id)), {:class => 'languageId', :include_blank => true} %>
-        </p>
-        <p>
-
-          <%= label_tag 'rate_value', 'Value' %>
-          <input class="create_rate[value][]" type="number" name="create_rate[value][]" id="rate_value" value='<%= @rate.value %>'>
-        </p>
-
-        <p>
-          <%= label_tag 'rate_currency_id', 'Currency Id' %>
-          <%= select_tag "create_rate[currency_id][]", (options_for_select(Currency.all.collect { |p| [ p.value, p.id ] }, :selected => @rate.currency_id)), {:class => 'currencyId', :include_blank => true} %>
-        </p>
-
-        <p>
-          <%= label_tag 'rate_unit_qty', 'Unit Qty' %>
-          <input class="create_rate[unitQty][]" type="number" name="create_rate[unit_qty][]" id="rate_unit_qty" value='<%= @rate.unit_qty %>'>
-        </p>
-
-        <p>
-          <%= label_tag 'rate_unit_type_id', 'Unit Type Id' %>
-          <%= select_tag "create_rate[unit_type_id][]", (options_for_select(UnitType.all.collect { |p| [ p.value, p.id ] }, :selected => @rate.unit_type_id )), {:class => 'unitTypeId', :include_blank => true} %>
-        </p>
-      </div>
-
-      <div class="insertAfterDiv">
-      </div>
-
-    </fieldset>
-</div>
-
-<% if user_rate.any? %>
-  <% user_rate.each do |rate| %>
+<% user_rate.each_with_index do |rate, index| %>
+  <fieldset class="box tabular"> <legend>Rate #<%= index+1 %></legend>
     <div>
-      <div class="splitcontent">
-          <div class="splitcontentleft">
-            <fieldset class="box tabular">
-                <div class="massCreateRateForm">
-                  <p style="display: none;">
-                    <input class="update_rate[id]" type="number" name='update_rate[<%= rate.id %>][id]' id="rate_id" value='<%= rate.id %>'>
-                  </p>
+      <p>
+        <%= label_tag 'rate_tracker_id', 'Tracker Id' %>
+        <%= Tracker.where(id: rate.tracker_id).first.try(:name) %>
+      </p>
 
-                  <p style="display: none;">
-                    <input class="update_rate[user_id][]" type="number" name="update_rate[id][]" id="rate_id" value='<%= user.id %>'>
-                  </p>
+      <p>
+        <%= label_tag 'rate_language_id', 'Language Id' %>
+        <%= Language.where(id: rate.language_id).first.try(:value) %>
+      </p>
 
-                  <p>
-                    <%= label_tag 'rate_tracker_id', 'Tracker Id' %>
-                    <%= select_tag "update_rate[#{rate.id}][tracker]", (options_for_select(Tracker.all.collect { |p| [ p.name, p.id ] }, :selected => rate.tracker_id)), {:class => 'trackerId', :include_blank => true} %>
-                  </p>
+      <p>
+        <%= label_tag 'rate_value', 'value' %>
+        <%= rate.value %>
+      </p>
 
-                  <p>
-                    <%= label_tag 'rate_language_id', 'Language Id' %>
-                    <%= select_tag "update_rate[#{rate.id}][language_id]", (options_for_select(Language.all.collect { |p| [ p.value, p.id ] }, :selected => rate.language_id)), {:class => 'languageId', :include_blank => true} %>
-                  </p>
+      <p>
+        <%= label_tag 'rate_currency_id', 'Currency Id' %>
+        <%= Currency.where(id: rate.currency_id).first.try(:value) %>
+      </p>
 
-                  <p>
-                    <%= label_tag 'rate_value', 'value' %>
-                    <input class='update_rate[<%= rate.id %>][value]' type="number" name='update_rate[<%= rate.id %>][value]' id="rate_value" value='<%= rate.value %>'>
-                  </p>
+      <p>
+        <%= label_tag 'rate_unit_qty', 'Unit Qty' %>
+        <%= rate.unit_qty %>
+      </p>
 
-                  <p>
-                    <%= label_tag 'rate_currency_id', 'Currency Id' %>
-                    <%= select_tag "update_rate[#{rate.id}][currency_id]", (options_for_select(Currency.all.collect { |p| [ p.value, p.id ] }, :selected => rate.currency_id)), {:class => 'currencyId', :include_blank => true} %>
-                  </p>
-
-                  <p>
-                    <%= label_tag 'rate_unit_qty', 'Unit Qty' %>
-                    <input class='update_rate[<%= rate.id %>][unitQty]' type="number" name='update_rate[<%= rate.id %>][unit_qty]' id="rate_unit_qty" value='<%= rate.unit_qty %>'>
-                  </p>
-
-                  <p>
-                    <%= label_tag 'rate_unit_type_id', 'Unit Type Id' %>
-                    <%= select_tag "update_rate[#{rate.id}][unit_type_id]", (options_for_select(UnitType.all.collect { |p| [ p.value, p.id ] }, :selected => rate.unit_type_id )), {:class => 'unitTypeId', :include_blank => true} %>
-                  </p>
-
-                  <p>
-                    <%= link_to "Destroy", rate, method: :delete, data: { confirm: "Are you sure?" } %>
-                  </p>
-
-                </div>
-              </fieldset>
-            </div>
-
-            <div class="splitcontentright">
-              <% ratings_by_rate = CaRating.where(rate_id: user_rate.ids, rate_id: rate.id) %>
-              <fieldset class="box tabular">
-                <p>
-                  <%= label_tag 'average_rating', 'Average Rating' %>
-                  <%= ratings_by_rate.pluck("value").inject{ |sum,x| sum + x }.to_f / ratings_by_rate.size %>
-                </p>
-
-                <% RatingType.all.each do |type| %>
-                  <p>
-                    <%= label_tag "average_#{type.value}", "Average #{type.value}" %>
-                    <%= ratings_by_rate.where(type_id: type.id).pluck("value").inject{ |sum,x| sum + x }.to_f / ratings_by_rate.where(type_id: type.id).size %>
-                  </p>
-                <% end %>
-            </div>
-      </div>
-      <div class="insertAfterDiv">
-      </div>
+      <p>
+        <%= label_tag 'rate_unit_type_id', 'Unit Type Id' %>
+        <%= UnitType.where(id: rate.unit_type_id).first.try(:value) %>
+      </p>
     </div>
-
-  <% end %>
-
-  <p>
-    <%= link_to "Update", home_path, :remote => true,
-        :id => "massUpdateRateId", :onlick => "massUpdateRate()" %>
-  </p>
-
-  <p>
-    <%= link_to "Add Rate", home_path, :remote => true,
-        :class => "icon icon-add", :id => "rateButton", :onlick => "duplicateRate()" %>
-  </p>
-
-<% else %>
-  <div class="insertAfterDiv">
-  </div>
-
-  <div style="display: none;">
-    <div class="splitcontent">
-        <div class="splitcontentleft">
-          <fieldset class="box tabular">
-              <div class="massCreateRateForm">
-                <p style="display: none;">
-                  <input class="rate[id]" type="number" name="rate[id]" id="rate_id" value='<%= @rate.id %>'>
-                </p>
-
-                <p style="display: none;">
-                  <input class="create_rate[user_id][]" type="number" name="create_rate[user_id][]" id="rate_id" value='<%= user.id %>'>
-                </p>
-
-                <p>
-                  <%= label_tag 'rate_tracker_id', 'Tracker Id' %>
-                  <%= select_tag "create_rate[tracker][]", (options_for_select(Tracker.all.collect { |p| [ p.name, p.id ] }, :selected => @rate.tracker_id)), {:class => 'trackerId', :include_blank => true} %>
-                </p>
-
-                <p>
-                  <%= label_tag 'rate_language_id', 'Language Id' %>
-                  <%= select_tag "create_rate[language_id][]", (options_for_select(Language.all.collect { |p| [ p.value, p.id ] }, :selected => @rate.language_id)), {:class => 'languageId', :include_blank => true} %>
-                </p>
-
-                <p>
-                  <%= label_tag 'rate_value', 'value' %>
-                  <input class="create_rate[value][]" type="number" name="create_rate[value][]" id="rate_value" value='<%= @rate.value %>'>
-                </p>
-
-                <p>
-                  <%= label_tag 'rate_currency_id', 'Currency Id' %>
-                  <%= select_tag "create_rate[currency_id][]", (options_for_select(Currency.all.collect { |p| [ p.value, p.id ] }, :selected => @rate.currency_id )), {:class => 'currencyId', :include_blank => true} %>
-                </p>
-
-                <p>
-                  <%= label_tag 'rate_unit_qty', 'unit_qty' %>
-                  <input class="create_rate[unitQty][]" type="number" name="create_rate[unit_qty][]" id="rate_unit_qty" value='<%= @rate.unit_qty %>'>
-                </p>
-
-                <p>
-                  <%= label_tag 'rate_unit_type_id', 'Unit Type Id' %>
-                  <%= select_tag "create_rate[unit_type_id][]", (options_for_select(UnitType.all.collect { |p| [ p.value, p.id ] }, :selected => @rate.unit_type_id )), {:class => 'unitTypeId', :include_blank => true} %>
-                </p>
-              </div>
-            </fieldset>
-          </div>
-
-          <div id="insertAfterDiv">
-          </div>
-    </div>
-  </div>
-
-  <p>
-    <%= link_to "Create", home_path, :remote => true,
-        :id => "massCreateRateId", :onlick => "massCreateRate()" %>
-  </p>
-
-  <p>
-    <%= link_to "Add Rate", home_path, :remote => true,
-        :class => "icon icon-add", :id => "rateButton", :onlick => "duplicateRate()" %>
-  </p>
+  </fieldset>
 <% end %>
-
-<%= javascript_tag do %>
-
-
-var original = document.getElementById('duplicater');
-
-document.getElementById('rateButton').onclick = duplicateRate;
-
-<% if user_rate.any? %>
-  document.getElementById('massUpdateRateId').onclick = massUpdateRate;
-<% else %>
-  document.getElementById('massCreateRateId').onclick = massCreateRate;
-<% end %>
-
-var i = 0;
-var rateOriginal = document.getElementById('duplicaterRate');
-
-function duplicateRate() {
-    var rateClone = rateOriginal.cloneNode(true);
-    rateClone.style.display = "block";
-    i = ++i
-    rateClone.id = "rateDuplicetor" + i;
-
-    $(rateClone).insertAfter($(".insertAfterDiv").last());
-}
-
-function massCreateRate() {
-  var params = {};
-  var massCreateRateFormCount = $( ".massCreateRateForm" ).length;
-
-  params['rate'] = {};
-
-  for (let i = 0; i < massCreateRateFormCount; i++) {
-    if ($(".unitQty").eq(i).val() !== '' && $(".value").eq(i).val() !== '') {
-      params['rate'][i] = {};
-      params['rate'][i]['user_id'] = <%= user.id %>;
-      params['rate'][i]['tracker_id'] = $(".trackerId").eq(i).val();
-      params['rate'][i]['language_id'] = $(".languageId").eq(i).val();
-      params['rate'][i]['value'] = $(".value").eq(i).val();
-      params['rate'][i]['currency_id'] = $(".currencyId").eq(i).val();
-      params['rate'][i]['unit_qty'] = $(".unitQty").eq(i).val();
-      params['rate'][i]['unit_type_id'] = $(".unitTypeId").eq(i).val();
-    }
-  }
-
-  $.ajax({
-    type: "POST",
-    url: "/rate_ratings/mass_create",
-    data: { params }
-  })
-}
-
-function massUpdateRate() {
-  var params = {};
-  var massCreateRateFormCount = $( ".massCreateRateForm" ).length;
-  var userRateCount = <%= user_rate.count %>
-
-  params['rate'] = {};
-
-
-  for (let i = 0; i < massCreateRateFormCount; i++) {
-    if ($(".unitQty").eq(i).val() !== '' && $(".value").eq(i).val() !== '') {
-      params['rate'][i] = {};
-
-      n = i-1;
-
-      if (i > userRateCount) {
-        params['rate'][i]['id'] = 'nil';
-      } else {
-        params['rate'][i]['id'] = $(".id").eq(n).val();
-      }
-
-      params['rate'][i]['user_id'] = <%= user.id %>;
-      params['rate'][i]['tracker_id'] = $(".trackerId").eq(i).val();
-      params['rate'][i]['language_id'] = $(".languageId").eq(i).val();
-      params['rate'][i]['value'] = $(".value").eq(i).val();
-      params['rate'][i]['currency_id'] = $(".currencyId").eq(i).val();
-      params['rate'][i]['unit_qty'] = $(".unitQty").eq(i).val();
-      params['rate'][i]['unit_type_id'] = $(".unitTypeId").eq(i).val();
-    }
-  }
-
-  $.ajax({
-    type: "PUT",
-    url: "/rate_ratings/mass_update",
-    data: { params }
-  })
-}
-
-<% end %>
-
-<style>
-  .tabular input, .tabular select {
-      width: 90%;
-  }
-</style>
