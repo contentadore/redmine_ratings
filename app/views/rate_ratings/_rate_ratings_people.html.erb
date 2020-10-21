@@ -1,0 +1,39 @@
+<% user = User.find(params[:id]) %>
+<% user_rate = Rate.where(user_id: user.id) %>
+<% ratings = CaRating.where(rate_id: user_rate.ids) %>
+
+<% user_rate.each_with_index do |rate, index| %>
+  <fieldset class="box tabular"> <legend>Rate #<%= index+1 %></legend>
+    <div>
+      <p>
+        <%= label_tag 'rate_tracker_id', 'Tracker Id' %>
+        <%= Tracker.where(id: rate.tracker_id).first.try(:name) %>
+      </p>
+
+      <p>
+        <%= label_tag 'rate_language_id', 'Language Id' %>
+        <%= Language.where(id: rate.language_id).first.try(:value) %>
+      </p>
+
+      <p>
+        <%= label_tag 'rate_value', 'value' %>
+        <%= rate.value %>
+      </p>
+
+      <p>
+        <%= label_tag 'rate_currency_id', 'Currency Id' %>
+        <%= Currency.where(id: rate.currency_id).first.try(:value) %>
+      </p>
+
+      <p>
+        <%= label_tag 'rate_unit_qty', 'Unit Qty' %>
+        <%= rate.unit_qty %>
+      </p>
+
+      <p>
+        <%= label_tag 'rate_unit_type_id', 'Unit Type Id' %>
+        <%= UnitType.where(id: rate.unit_type_id).first.try(:value) %>
+      </p>
+    </div>
+  </fieldset>
+<% end %>
