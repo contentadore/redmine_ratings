@@ -7,14 +7,13 @@ class RateRatingsController < ApplicationController
   def mass_create
     params['params']['rate'].to_unsafe_h.each_with_index do |p, i|
       unless p[1]['tracker_id'].blank? &&
-         p[1]['language_id'].blank? &&
-         p[1]['value'].blank? &&
-         p[1]['currency_id'].blank? &&
-         p[1]['unit_qty'].blank? &&
-         p[1]['unit_type_id'].blank?
+        p[1]['language_id'].blank? &&
+        p[1]['value'].blank? &&
+        p[1]['currency_id'].blank? &&
+        p[1]['unit_qty'].blank? &&
+        p[1]['unit_type_id'].blank?
 
-         @rate = Rate.new
-
+        @rate = Rate.new
 
         @rate.user_id = p[1]['user_id']
         @rate.tracker_id = p[1]['tracker_id']

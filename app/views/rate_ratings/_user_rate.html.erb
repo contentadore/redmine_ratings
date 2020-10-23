@@ -143,6 +143,12 @@
 
   <% end %>
 
+  <p>
+    <%= link_to "Add Rate", home_path, :remote => true,
+        :class => "icon icon-add", :id => "rateButton", :onlick => "duplicateRate()" %>
+  </p>
+
+
 <% else %>
   <div class="insertAfterDiv">
   </div>
@@ -197,6 +203,37 @@
           </div>
     </div>
   </div>
+
+  <p>
+    <%= link_to "Add Rate", home_path, :remote => true,
+        :class => "icon icon-add", :id => "rateButton", :onlick => "duplicateRate()" %>
+  </p>
+<% end %>
+
+
+<%= javascript_tag do %>
+
+var original = document.getElementById('duplicater');
+
+document.getElementById('rateButton').onclick = duplicateRate;
+
+<% if user_rate.any? %>
+  document.getElementById('massUpdateRateId').onclick = massUpdateRate;
+<% else %>
+  document.getElementById('massCreateRateId').onclick = massCreateRate;
+<% end %>
+
+var i = 0;
+var rateOriginal = document.getElementById('duplicaterRate');
+
+function duplicateRate() {
+    var rateClone = rateOriginal.cloneNode(true);
+    rateClone.style.display = "block";
+    i = ++i
+    rateClone.id = "rateDuplicetor" + i;
+
+    $(rateClone).insertAfter($(".insertAfterDiv").last());
+}
 
 <% end %>
 
