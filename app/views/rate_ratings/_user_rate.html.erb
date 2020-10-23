@@ -217,12 +217,6 @@ var original = document.getElementById('duplicater');
 
 document.getElementById('rateButton').onclick = duplicateRate;
 
-<% if user_rate.any? %>
-  document.getElementById('massUpdateRateId').onclick = massUpdateRate;
-<% else %>
-  document.getElementById('massCreateRateId').onclick = massCreateRate;
-<% end %>
-
 var i = 0;
 var rateOriginal = document.getElementById('duplicaterRate');
 
