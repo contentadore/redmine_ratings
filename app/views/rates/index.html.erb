@@ -1,0 +1,48 @@
+<h1> Rates </h1>
+
+<table class="list people">
+  <thead><tr>
+    <th><%= link_to "User", rates_path(filter: :user) %></th>
+    <th><%= link_to "Tracker", rates_path(filter: :tracker) %></th>
+    <th><%= link_to "Language", rates_path(filter: :language) %></th>
+    <th><%= link_to "Value", rates_path(filter: :value) %></th>
+    <th><%= link_to "Currency", rates_path(filter: :currency) %></th>
+    <th><%= link_to "Unit Qty", rates_path(filter: :unit_qty) %></th>
+    <th><%= link_to "Unit Type", rates_path(filter: :unit_type) %></th>
+  </tr></thead>
+  <tbody>
+
+    <% @rates.each do |rate| %>
+      <tr>
+        <td>
+          <%= link_to "#{User.where(id: rate.user_id).first.try(:name)}", person_path(User.where(id: rate.user_id).first) %>
+        </td>
+
+        <td>
+          <%= Tracker.where(id: rate.tracker_id).first.try(:name) %>
+        </td>
+
+        <td>
+          <%= Language.where(id: rate.language_id).first.try(:value) %>
+        </td>
+
+        <td>
+          <%= rate.value %>
+        </td>
+
+        <td>
+          <%= Currency.where(id: rate.currency_id).first.try(:value) %>
+        </td>
+
+        <td>
+          <%= rate.unit_qty %>
+        </td>
+
+        <td>
+          <%= UnitType.where(id: rate.unit_type_id).first.try(:value) %>
+        </td>
+
+      </tr>
+    <% end %>
+  </tbody>
+</table>
