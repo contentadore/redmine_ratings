@@ -1,6 +1,6 @@
 class LanguagesController < ApplicationController
   def index
-    @languages = Language.all
+    @languages = Language.all.sort_by(&:priority)
   end
 
   def new
@@ -8,7 +8,7 @@ class LanguagesController < ApplicationController
   end
 
   def create
-    language_params = params.require(:language).permit(:value)
+    language_params = params.require(:language).permit(:value, :priority)
     @language = Language.new(language_params)
     @language.save
     redirect_to @language
@@ -20,7 +20,7 @@ class LanguagesController < ApplicationController
 
   def update
     @language = Language.find(params[:id])
-    language_params = params.require(:language).permit(:value)
+    language_params = params.require(:language).permit(:value, :priority)
     @language.update(language_params)
     redirect_to @language
   end

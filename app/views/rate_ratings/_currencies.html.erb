@@ -4,6 +4,7 @@
   <thead>
     <tr>
       <th>Value</th>
+      <th>Priority</th>
       <th colspan="3">Actions</th>
     </tr>
   </thead>
@@ -12,6 +13,7 @@
     <% @currencies.each do |currency| %>
       <tr>
         <td><%= currency.value %></td>
+        <td><%= currency.priority %></td>
         <td><%= link_to "Show", currency %></td>
         <td><%= link_to "Edit", edit_currency_path(currency) %></td>
         <td><%= link_to "Destroy", currency, method: :delete, data: { confirm: "Are you sure?" } %></td>

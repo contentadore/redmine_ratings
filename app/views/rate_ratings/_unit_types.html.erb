@@ -4,6 +4,7 @@
   <thead>
     <tr>
       <th>Value</th>
+      <th>Priority</th>
       <th colspan="3">Actions</th>
     </tr>
   </thead>
@@ -12,6 +13,7 @@
     <% @unit_types.each do |unit_type| %>
       <tr>
         <td><%= unit_type.value %></td>
+        <td><%= unit_type.priority %></td>
         <td><%= link_to "Show", unit_type %></td>
         <td><%= link_to "Edit", edit_unit_type_path(unit_type) %></td>
         <td><%= link_to "Destroy", unit_type, method: :delete, data: { confirm: "Are you sure?" } %></td>

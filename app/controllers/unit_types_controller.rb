@@ -1,6 +1,6 @@
 class UnitTypesController < ApplicationController
   def index
-    @unit_types = UnitType.all
+    @unit_types = UnitType.all.sort_by(&:priority)
   end
 
   def new
@@ -8,7 +8,7 @@ class UnitTypesController < ApplicationController
   end
 
   def create
-    unit_type_params = params.require(:unit_type).permit(:value)
+    unit_type_params = params.require(:unit_type).permit(:value, :priority)
     @unit_type = UnitType.new(unit_type_params)
     @unit_type.save
     redirect_to @unit_type
@@ -20,7 +20,7 @@ class UnitTypesController < ApplicationController
 
   def update
     @unit_type = UnitType.find(params[:id])
-    unit_type_params = params.require(:unit_type).permit(:value)
+    unit_type_params = params.require(:unit_type).permit(:value, :priority)
     @unit_type.update(unit_type_params)
     redirect_to @unit_type
   end
