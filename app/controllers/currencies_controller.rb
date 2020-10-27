@@ -1,6 +1,6 @@
 class CurrenciesController < ApplicationController
   def index
-    @currencies = Currency.all
+    @currencies = Currency.all.sort_by(&:priority)
   end
 
   def new
@@ -8,7 +8,7 @@ class CurrenciesController < ApplicationController
   end
 
   def create
-    currency_params = params.require(:currency).permit(:value)
+    currency_params = params.require(:currency).permit(:value, :priority)
     @currency = Currency.new(currency_params)
     @currency.save
     redirect_to @currency
@@ -20,7 +20,7 @@ class CurrenciesController < ApplicationController
 
   def update
     @currency = Currency.find(params[:id])
-    currency_params = params.require(:currency).permit(:value)
+    currency_params = params.require(:currency).permit(:value, :priority)
     @currency.update(currency_params)
     redirect_to @currency
   end

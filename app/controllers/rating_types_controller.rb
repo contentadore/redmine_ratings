@@ -1,6 +1,6 @@
 class RatingTypesController < ApplicationController
   def index
-    @rating_types = RatingType.all
+    @rating_types = RatingType.all.sort_by(&:priority)
   end
 
   def new
@@ -8,7 +8,7 @@ class RatingTypesController < ApplicationController
   end
 
   def create
-    rating_type_params = params.require(:rating_type).permit(:value)
+    rating_type_params = params.require(:rating_type).permit(:value, :priority)
     @rating_type = RatingType.new(rating_type_params)
     @rating_type.save
     redirect_to @rating_type
@@ -20,7 +20,7 @@ class RatingTypesController < ApplicationController
 
   def update
     @rating_type = RatingType.find(params[:id])
-    rating_type_params = params.require(:rating_type).permit(:value)
+    rating_type_params = params.require(:rating_type).permit(:value, :priority)
     @rating_type.update(rating_type_params)
     redirect_to @rating_type
   end

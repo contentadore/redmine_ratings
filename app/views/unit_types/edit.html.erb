@@ -5,6 +5,11 @@
   </p>
 
   <p>
+    <%= f.label :priority %>
+    <%= f.number_field :priority, value: @unit_type.priority %>
+  </p>
+
+  <p>
     <%= f.submit %>
   </p>
 <% end %>
