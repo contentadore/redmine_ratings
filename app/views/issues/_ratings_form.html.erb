@@ -28,13 +28,32 @@
 
 <%= javascript_tag do %>
 
+  $("#issue_language_id").change(function() {
+    var arr = []
+    $(".rating").each(function() {
+      arr.push($(this).val())
+    });
+
+    var language = $("select#issue_language_id").val();
+
+    if (!arr.includes('0') && language !== '') {
+      $('input[name ="commit"]').prop("disabled", false);
+      $("#rating_error").hide();
+    } else {
+      $('input[name ="commit"]').prop("disabled", true);
+      $("#rating_error").show();
+    }
+  });
+
   $(".rating").on('click', function(event){
     var arr = []
     $(".rating").each(function() {
       arr.push($(this).val())
     });
 
-    if (!arr.includes('0')) {
+    var language = $("select#issue_language_id").val();
+
+    if (!arr.includes('0') && language !== '') {
       $('input[name ="commit"]').prop("disabled", false);
       $("#rating_error").hide();
     } else {
