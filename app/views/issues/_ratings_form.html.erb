@@ -28,6 +28,7 @@
 
 <%= javascript_tag do %>
 
+
   $("#issue_language_id").change(function() {
     var arr = []
     $(".rating").each(function() {
@@ -43,6 +44,24 @@
       $('input[name ="commit"]').prop("disabled", true);
       $("#rating_error").show();
     }
+
+    if (!arr.includes('0')) {
+      $("#rating_error").hide();
+    } else {
+      $("#rating_error").show();
+    }
+
+    if (language !== '') {
+      $("#language_error").hide();
+    } else {
+      $("#language_error").show();
+    }
+  });
+
+
+
+  $( "#issue_language_id" ).select(function() {
+    var language = $("select#issue_language_id").val();
   });
 
   $(".rating").on('click', function(event){
@@ -55,10 +74,20 @@
 
     if (!arr.includes('0') && language !== '') {
       $('input[name ="commit"]').prop("disabled", false);
-      $("#rating_error").hide();
     } else {
       $('input[name ="commit"]').prop("disabled", true);
+    }
+
+    if (!arr.includes('0')) {
+      $("#rating_error").hide();
+    } else {
       $("#rating_error").show();
+    }
+
+    if (language !== '') {
+      $("#language_error").hide();
+    } else {
+      $("#language_error").show();
     }
   });
 
@@ -66,7 +95,7 @@
     <% if User.current.admin? || Setting.plugin_redmine_ratings['rating_visible'] == "1" || (User.current.roles.ids.any? && (User.current.roles.ids.to_a.map(&:to_s) & Setting.plugin_redmine_ratings['rating_role_ids'].to_a.map(&:to_s)).any? && Setting.plugin_redmine_ratings['rating_visible'] == "0") %>
       <% if  @issue.status.name == 'Closed' || @issue.status.name == 'Done' %>
         <% if @rating_types.any? %>
-          $('input[name ="commit"]').prop( "disabled", true );
+          $('input[name ="commit"]').prop("disabled", true);
         <% end %>
       <% end %>
     <% end %>
