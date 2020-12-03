@@ -26,7 +26,6 @@
   <% end %>
 <% end %>
 
-
 <%= javascript_tag do %>
   $("#issue_language_id").change(function() {
     var arr = []
@@ -128,7 +127,6 @@
       $('input[name ="commit"]').prop("disabled", true);
     <% end %>
 
-
     <% if User.current.admin? || Setting.plugin_redmine_ratings['rating_visible'] == "1" || (User.current.roles.ids.any? && (User.current.roles.ids.to_a.map(&:to_s) & Setting.plugin_redmine_ratings['rating_role_ids'].to_a.map(&:to_s)).any? && Setting.plugin_redmine_ratings['rating_visible'] == "0") %>
       <% if  @issue.status.name == 'Closed' || @issue.status.name == 'Done' %>
         <% if @rating_types.any? %>
@@ -143,5 +141,13 @@
     <% else %>
       $("#rating_error").hide();
     <% end %>
+
+    <% if Setting.plugin_redmine_ratings['lang_tracker_ids'].include? @issue.tracker_id.to_s %>
+      $("#language_error").show();
+      $('input[name ="commit"]').prop("disabled", true);
+    <% else %>
+      $("#language_error").hide();
+      $('input[name ="commit"]').prop("disabled", false);
+    <% end%>
   });
 <% end %>
