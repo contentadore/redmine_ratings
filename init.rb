@@ -2,11 +2,11 @@ require 'redmine'
 
 Redmine::Plugin.register :redmine_ratings do
   name 'redmine_ratings plugin'
-  author 'Yunes Zadi'
+  author 'ContentAdore'
   description 'This is a plugin for users rating'
   version '1.0.0'
   url 'https://contentadore.com'
-  author_url 'https://github.com/yuneszadi'
+  author_url 'https://contentadore.com/'
 
   settings :default => {
     'rating_visible' => '1',
